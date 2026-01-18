@@ -525,9 +525,9 @@ local keyboard(theme, orientation) =
       }
     ),
 
-    symbolButtonForegroundStyle: utils.makeSystemImageStyle(
+    symbolButtonForegroundStyle: utils.makeTextStyle(
       params={
-        systemImageName: 'xmark.triangle.circle.square',
+        text: '符',
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
@@ -611,7 +611,7 @@ local keyboard(theme, orientation) =
       params={
         key: 'spaceRight',
         size: ButtonSize['spaceRight键size'],
-        action: { character: '，' },
+        action: { character: '。' },
         backgroundStyle: 'alphabeticBackgroundStyle',
         foregroundStyle: [
           'spaceRightButtonForegroundStyle',
@@ -627,7 +627,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: { x: 0.5, y: 0.6 },
+        center: { x: 0.5, y: 0.35 },
       }
     ),
 
@@ -637,7 +637,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: { x: 0.58, y: 0.32 },
+        center: { x: 0.5, y: 0.65 },
       }
     ),
 

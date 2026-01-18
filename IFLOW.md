@@ -23,9 +23,9 @@ iPure·Pro 是一款基于 Hamster 输入法的皮肤配置项目，使用 Jsonn
 ```
 iPurePro/
 ├── config.yaml              # 皮肤配置元数据（生成后）
-├── jsonnet/                 # Jsonnet 源文件
+├── jsonnet/                 # Jsonnet 源文件（配置文件，需要版本管理）
 │   ├── main.jsonnet        # 主入口文件，定义所有键盘配置
-│   ├── keyboard/           # 键盘布局定义
+│   ├── keyboard/           # 键盘布局定义（具体键盘配置文件）
 │   │   ├── pinyin_26.jsonnet          # 拼音键盘（26键）
 │   │   ├── alphabetic_26.jsonnet      # 字母键盘（26键）
 │   │   ├── numeric_9_portrait.jsonnet # 数字键盘（竖屏）
@@ -33,7 +33,7 @@ iPurePro/
 │   │   ├── symbolic_portrait.jsonnet  # 符号键盘
 │   │   ├── emoji_portrait.jsonnet     # Emoji键盘（已注释）
 │   │   └── panel.jsonnet              # 面板键盘
-│   └── lib/               # 共享库文件
+│   └── lib/               # 共享库文件（可修改的配置文件）
 │       ├── animation.libsonnet        # 动画配置
 │       ├── center.libsonnet           # 中心偏移配置
 │       ├── collectionData.libsonnet   # 集合数据
@@ -49,7 +49,7 @@ iPurePro/
 │       ├── toolbar.libsonnet          # 工具栏配置（中文）
 │       ├── toolbar-en.libsonnet       # 工具栏配置（英文）
 │       └── utils.libsonnet            # 工具函数
-├── light/                    # 亮色主题生成的 YAML 文件
+├── light/                    # 亮色主题生成的 YAML 文件（自动生成，不追踪）
 │   ├── alphabetic_26_portrait.yaml
 │   ├── alphabetic_26_landscape.yaml
 │   ├── numeric_9_portrait.yaml
@@ -60,7 +60,7 @@ iPurePro/
 │   ├── panel_portrait.yaml
 │   ├── panel_landscape.yaml
 │   └── resources/           # 亮色主题资源文件
-└── dark/                     # 暗色主题生成的 YAML 文件
+└── dark/                     # 暗色主题生成的 YAML 文件（自动生成，不追踪）
     ├── alphabetic_26_portrait.yaml
     ├── alphabetic_26_landscape.yaml
     ├── numeric_9_portrait.yaml
@@ -72,6 +72,30 @@ iPurePro/
     ├── panel_landscape.yaml
     └── resources/           # 暗色主题资源文件
 ```
+
+## Jsonnet 目录说明
+
+`jsonnet/` 目录包含所有源配置文件，是项目的核心部分，需要进行 Git 版本管理。
+
+### keyboard/ 目录
+包含各个键盘的具体配置文件，每个文件定义一个键盘类型：
+- **pinyin_26.jsonnet**：中文拼音键盘，26 键布局
+- **alphabetic_26.jsonnet**：英文字母键盘，26 键布局
+- **numeric_9_portrait.jsonnet**：数字键盘竖屏版本，9 键布局
+- **numeric_9_landscape.jsonnet**：数字键盘横屏版本，9 键布局
+- **symbolic_portrait.jsonnet**：符号键盘
+- **panel.jsonnet**：面板键盘（浮动模式）
+
+### lib/ 目录
+包含共享的库文件，提供可复用的配置和工具函数：
+- **配置类文件**：定义颜色、字体大小、布局参数等基础配置
+- **数据类文件**：定义滑动操作数据、长按提示数据、工具栏数据等
+- **工具类文件**：提供样式生成、工具函数等
+
+**重要说明：**
+- `jsonnet/` 目录下的所有文件都是**配置文件**，可以修改
+- 只有 `light/` 和 `dark/` 目录下的 `.yaml` 文件是自动生成的，不需要版本管理
+- 修改任何 Jsonnet 文件后，需要运行构建命令重新生成 YAML 文件
 
 ## 构建和运行
 
@@ -233,6 +257,147 @@ jsonnet -S -m . jsonnet/main.jsonnet
 - `genHintStyles()`：批量生成提示样式
 
 ## 修改指南
+
+### ⚠️ 重要原则：保证统一性
+
+**所有修改必须保证对所有键盘类型、亮色和暗色主题都统一应用，确保键盘的一致性。**
+
+修改任何功能时，需要考虑：
+1. **键盘类型**：拼音键盘、字母键盘、数字键盘、符号键盘、面板键盘
+2. **屏幕方向**：竖屏、横屏
+3. **主题模式**：亮色、暗色
+4. **设备类型**：iPhone、iPad
+
+### 修改示例
+
+#### 示例 1：修改符号按键的显示（从图标改为文字）
+
+**需求**：将所有键盘的符号按键从 SF Symbols 图标改为中文「符」字
+
+**需要修改的文件**：
+- `jsonnet/keyboard/pinyin_26.jsonnet` - 拼音键盘
+- `jsonnet/keyboard/alphabetic_26.jsonnet` - 字母键盘
+- `jsonnet/keyboard/numeric_9_portrait.jsonnet` - 数字键盘竖屏
+
+**注意**：`numeric_9_landscape.jsonnet` 会自动继承 `numeric_9_portrait.jsonnet` 的定义，不需要单独修改。
+
+**修改方法**：
+```jsonnet
+// 修改前
+symbolButtonForegroundStyle: utils.makeSystemImageStyle(
+  params={
+    systemImageName: 'xmark.triangle.circle.square',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: center['功能键前景文字偏移'],
+  }
+),
+
+// 修改后
+symbolButtonForegroundStyle: utils.makeTextStyle(
+  params={
+    text: '符',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: center['功能键前景文字偏移'],
+  }
+),
+```
+
+#### 示例 2：修改逗号/句号按键的行为和显示
+
+**需求**：
+- 点击输入句号（。），上划输入逗号（，）
+- 两个标点垂直居中显示
+
+**需要修改的文件**：
+- `jsonnet/keyboard/pinyin_26.jsonnet` - 中文拼音键盘
+- `jsonnet/keyboard/alphabetic_26.jsonnet` - 英文字母键盘
+- `jsonnet/lib/swipeData.libsonnet` - 中文滑动数据
+- `jsonnet/lib/swipeData-en.libsonnet` - 英文滑动数据
+
+**修改方法**：
+
+1. **修改滑动数据**（swipeData.libsonnet）：
+```jsonnet
+// 修改 spaceRight 的上划操作
+spaceRight: { action: { character: '，' }, label: { text: '' } },
+```
+
+2. **修改按键配置**（pinyin_26.jsonnet）：
+```jsonnet
+// 修改默认点击操作
+spaceRightButton: createButton(
+  params={
+    key: 'spaceRight',
+    size: ButtonSize['spaceRight键size'],
+    action: { character: '。' },  // 改为句号
+    // ...
+  }
+),
+
+// 修改显示位置，垂直居中
+spaceRightButtonForegroundStyle: utils.makeTextStyle(
+  params={
+    text: '，',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: { x: 0.5, y: 0.35 },  // 上方位置
+  }
+),
+
+spaceRightButtonForegroundStyle2: utils.makeTextStyle(
+  params={
+    text: '。',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: { x: 0.5, y: 0.65 },  // 下方位置
+  }
+),
+```
+
+#### 示例 3：修改全局字体大小
+
+**需求**：调整上划和下滑文字的大小
+
+**需要修改的文件**：
+- `jsonnet/lib/fontSize.libsonnet` - 字体大小配置
+
+**修改方法**：
+```jsonnet
+{
+  '上划文字大小': 12,  // 修改这个值
+  '下划文字大小': 12,  // 修改这个值
+  // ...
+}
+```
+
+**影响范围**：此修改会自动应用到所有键盘类型、所有主题模式。
+
+#### 示例 4：修改颜色主题
+
+**需求**：调整亮色主题的按键背景颜色
+
+**需要修改的文件**：
+- `jsonnet/lib/color.libsonnet` - 颜色配置
+
+**修改方法**：
+```jsonnet
+{
+  light: {
+    '字母键背景颜色-普通': '#FFFFFF',  // 修改这个值
+    '字母键背景颜色-高亮': '#ABB0BA',
+    // ...
+  },
+  dark: {
+    // 暗色主题配置
+  }
+}
+```
 
 ### 修改颜色
 

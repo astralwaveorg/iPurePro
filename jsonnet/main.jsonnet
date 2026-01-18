@@ -1,5 +1,5 @@
 local config = {
-  author: 'Astral',
+  author: 'sicen',
   name: 'iPure·Pro',
   pinyin: {
     iPhone: {

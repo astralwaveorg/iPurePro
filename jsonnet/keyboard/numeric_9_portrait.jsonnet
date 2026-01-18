@@ -233,9 +233,9 @@ local keyboard(theme) =
       }
     ),
 
-    symbolButtonForegroundStyle: utils.makeSystemImageStyle(
+    symbolButtonForegroundStyle: utils.makeTextStyle(
       params={
-        systemImageName: 'xmark.triangle.circle.square',
+        text: '符',
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
