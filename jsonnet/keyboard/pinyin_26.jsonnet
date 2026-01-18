@@ -419,7 +419,7 @@ local keyboard(theme, orientation) =
     vButton: createButton(
       params={
         key: 'v',
-        size: std.get(ButtonSize, '普通键size'),
+        size: std.get(ButtonSize, if orientation == 'landscape' then 'v键size' else '普通键size'),
       }
     ),
 
@@ -432,7 +432,7 @@ local keyboard(theme, orientation) =
     bButton: createButton(
       params={
         key: 'b',
-        size: std.get(ButtonSize, '普通键size'),
+        size: std.get(ButtonSize, if orientation == 'landscape' then 'b键size' else '普通键size'),
       }
     ),
 
@@ -445,7 +445,7 @@ local keyboard(theme, orientation) =
     nButton: createButton(
       params={
         key: 'n',
-        size: std.get(ButtonSize, '普通键size'),
+        size: std.get(ButtonSize, if orientation == 'landscape' then 'n键size' else '普通键size'),
       }
     ),
 
@@ -531,7 +531,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        center: { x: 0.5, y: 0.48 },  // 向上调整0.02
       }
     ),
 
@@ -627,7 +627,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: { x: 0.5, y: 0.35 },
+        center: { x: 0.58, y: 0.25 },  // 向右调整0.08，向上调整0.1
       }
     ),
 
@@ -637,7 +637,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: { x: 0.5, y: 0.65 },
+        center: { x: 0.58, y: 0.55 },  // 向右调整0.08，向上调整0.1
       }
     ),
 
@@ -835,6 +835,7 @@ local keyboard(theme, orientation) =
       swipe_up: swipe_up,
       swipe_down: swipe_down,
       type: 'pinyin',
+      orientation: orientation,
     }) +
     hintSymbolsStyles.getStyle(theme, hintSymbolsData) +  // 长按
     toolbar.getToolBar(theme, orientation) +  // 工具栏

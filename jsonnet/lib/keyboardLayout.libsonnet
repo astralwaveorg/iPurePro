@@ -117,7 +117,7 @@ local keyboarLayout(theme='light') = {
                 subviews: [
                   { Cell: 'EnZhButton' },
                   { Cell: 'symbolButton' },
-                  { Cell: 'numberButton' },
+                  { Cell: 'spaceButton' },
                 ],
               },
             },
@@ -169,7 +169,7 @@ local keyboarLayout(theme='light') = {
             {
               HStack: {
                 subviews: [
-                  { Cell: 'spaceButton' },
+                  { Cell: 'numberButton' },
                   { Cell: 'spaceRightButton' },
                   { Cell: 'enterButton' },
                 ],
@@ -323,7 +323,7 @@ local keyboarLayout(theme='light') = {
                 subviews: [
                   { Cell: 'EnZhButton' },
                   { Cell: 'symbolButton' },
-                  { Cell: 'numberButton' },
+                  { Cell: 'spaceButton' },
                 ],
               },
             },
@@ -375,7 +375,7 @@ local keyboarLayout(theme='light') = {
             {
               HStack: {
                 subviews: [
-                  { Cell: 'spaceButton' },
+                  { Cell: 'numberButton' },
                   { Cell: 'spaceRightButton' },
                   { Cell: 'enterButton' },
                 ],
@@ -542,7 +542,16 @@ local keyboarLayout(theme='light') = {
       width: '104/784',
     },
     'enter键size': {
-      width: '104/784',
+      width: '346/784',  // m + backspace = 146/784 + 200/784
+    },
+    'v键size': {
+      width: '209.6/784',  // number + spaceRight = 105.6/784 + 104/784
+    },
+    'b键size': {
+      width: '209.6/784',
+    },
+    'n键size': {
+      width: '209.6/784',
     },
   },
 };

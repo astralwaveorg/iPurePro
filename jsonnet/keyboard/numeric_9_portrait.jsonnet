@@ -239,7 +239,7 @@ local keyboard(theme) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        center: { x: 0.5, y: 0.48 },  // 向上调整0.02
       }
     ),
 
@@ -519,6 +519,7 @@ local keyboard(theme) =
       swipe_up: swipe_up,
       swipe_down: swipe_down,
       type: 'number',
+      orientation: 'portrait',
     }) +
     hintSymbolsStyles.getStyle(theme, hintSymbolsData) +
     toolbar.getToolBar(theme, 'portrait') +

@@ -216,6 +216,7 @@ local keyboard(theme) =
       swipe_up: swipe_up,
       swipe_down: swipe_down,
       type: 'number',
+      orientation: 'landscape',
     }) +
     hintSymbolsStyles.getStyle(theme, hintSymbolsData) +  // 长按
     toolbar.getToolBar(theme, 'landscape') +  // 工具栏
