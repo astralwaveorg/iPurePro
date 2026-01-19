@@ -530,7 +530,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]["按键前景颜色"],
         highlightColor: color[theme]["按键前景颜色"],
         fontSize: fontSize["按键前景文字大小"],
-        center: { x: 0.5, y: 0.48 },  // 向上调整0.02
+        center: { x: 0.5, y: 0.48 },
       }
     ),
 
@@ -583,7 +583,7 @@ local keyboard(theme, orientation) =
     spaceButtonForegroundStyle2: utils.makeTextStyle({
       text: "$rimeSchemaName",
       fontSize: 8,
-      center: { x: 0.17, y: 0.2 },
+      center: { x: 0.18, y: 0.24 },
       normalColor: color[theme]["划动字符颜色"],
       highlightColor: color[theme]["划动字符颜色"],
     }),
@@ -592,7 +592,7 @@ local keyboard(theme, orientation) =
       params={
         key: "spaceRight",
         size: ButtonSize["spaceRight键size"],
-        action: { character: "," },
+        action: { character: '.' },
         backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
           "spaceRightButtonForegroundStyle",

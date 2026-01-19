@@ -611,7 +611,7 @@ local keyboard(theme, orientation) =
       params={
         key: "spaceRight",
         size: ButtonSize["spaceRight键size"],
-        action: { character: "。" },
+        action: { character: '。' },
         backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
           "spaceRightButtonForegroundStyle",
@@ -627,7 +627,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]["按键前景颜色"],
         highlightColor: color[theme]["按键前景颜色"],
         fontSize: fontSize["按键前景文字大小"],
-        center: { x: 0.58, y: 0.25 },  // 向右调整0.08，向上调整0.1
+        center: { x: 0.58, y: 0.25 },
       }
     ),
 
@@ -637,7 +637,7 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]["按键前景颜色"],
         highlightColor: color[theme]["按键前景颜色"],
         fontSize: fontSize["按键前景文字大小"],
-        center: { x: 0.58, y: 0.55 },  // 向右调整0.08，向上调整0.1
+        center: { x: 0.58, y: 0.55 },
       }
     ),
 

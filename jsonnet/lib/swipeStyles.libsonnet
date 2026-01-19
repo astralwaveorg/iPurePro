@@ -1,11 +1,7 @@
-// lib/swipeStyles.libsonnet
 local center = import 'center.libsonnet';
 local color = import 'color.libsonnet';
 local fontSize = import 'fontSize.libsonnet';
-
-// 解析颜色，支持多种形式
 local pickColors = function(overridesColor, theme)
-  // 从覆盖颜色中提取特定主题的颜色，如果overridesColor为空则返回空对象
   if overridesColor == {} then {}
   else {
     normalColor: overridesColor[theme].normalColor,
@@ -15,7 +11,6 @@ local pickColors = function(overridesColor, theme)
 local colorsOrDefault = function(overrides, theme)
   local overridesColor = std.get(overrides, 'color', {});
   local picked = pickColors(overridesColor, theme);
-  // 如果有覆盖颜色则使用，否则使用默认的划动字符颜色
   if picked != {} then picked else { normalColor: color[theme]['划动字符颜色'], highlightColor: color[theme]['划动字符颜色'] };
 
 local defaultCenter = function(direction, type, orientation)
@@ -31,25 +26,25 @@ local defaultCenter = function(direction, type, orientation)
       cn9: center['数字键盘下划文字偏移'],
     },
   };
-  
+
   local landscapeMap = {
     up: {
-      pinyin: { x: 0.15, y: 0.15 },  // 横屏上划：左上角
+      pinyin: { x: 0.15, y: 0.15 },
       number: { x: 0.15, y: 0.15 },
       cn9: { x: 0.15, y: 0.15 },
     },
     down: {
-      pinyin: { x: 0.85, y: 0.85 },  // 横屏下滑：右下角
+      pinyin: { x: 0.85, y: 0.85 },
       number: { x: 0.85, y: 0.85 },
       cn9: { x: 0.85, y: 0.85 },
     },
   };
-  
+
   if orientation == 'landscape' then landscapeMap[direction][type]
   else portraitMap[direction][type];
 
 
-local defaultFontSize = function(direction, orientation) 
+local defaultFontSize = function(direction, orientation)
   if orientation == 'landscape' then
     if direction == 'up' then fontSize['横屏上划文字大小'] else fontSize['横屏下划文字大小']
   else

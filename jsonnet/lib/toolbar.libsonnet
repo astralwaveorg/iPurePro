@@ -14,14 +14,14 @@ local getToolBar(theme, orientation='portrait') = {
     foregroundStyle: 'preeditForegroundStyle',
   },
   preeditBackgroundStyle: {
-    buttonStyleType: 'fileImage',  // 改为图片格式
+    buttonStyleType: 'fileImage',
     normalImage: {
       file: 'toolbar_bg',
       image: 'preedit_bg',
     },
   },
   preeditForegroundStyle: {
-    buttonStyleType: 'fileImage',  // 改为图片格式
+    buttonStyleType: 'fileImage',
     normalImage: {
       file: 'toolbar_text',
       image: 'preedit_text',
