@@ -148,7 +148,7 @@ local keyboard(theme) =
     lanseButtonBackgroundStyle: utils.makeGeometryStyle(
       params={
         insets: { top: 4, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(蓝色)'],
+        normalColor: color[theme]['enter键背景(绿色)'],
         highlightColor: color[theme]['字母键背景颜色-普通'],
         cornerRadius: 7,
         normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],

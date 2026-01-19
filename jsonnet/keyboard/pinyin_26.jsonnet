@@ -369,7 +369,7 @@ local keyboard(theme, orientation) =
       params={
         buttonStyleType: 'geometry',
         insets: { top: 3, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(蓝色)'],
+        normalColor: color[theme]['enter键背景(绿色)'],
         highlightColor: color[theme]['功能键背景颜色-高亮'],
         cornerRadius: 7,
         normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
@@ -710,8 +710,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle6: utils.makeSystemImageStyle(
       params={
         systemImageName: 'magnifyingglass',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -720,8 +720,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle7: utils.makeSystemImageStyle(
       params={
         systemImageName: 'paperplane',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -730,8 +730,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle14: utils.makeSystemImageStyle(
       params={
         systemImageName: 'arrowshape.turn.up.forward',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -740,8 +740,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle9: utils.makeSystemImageStyle(
       params={
         systemImageName: 'checkmark.app.stack',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -751,7 +751,7 @@ local keyboard(theme, orientation) =
       params={
         buttonStyleType: 'geometry',
         insets: { top: 4, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(蓝色)'],
+        normalColor: color[theme]['enter键背景(绿色)'],
         highlightColor: color[theme]['功能键背景颜色-高亮'],
         cornerRadius: 7,
         normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],

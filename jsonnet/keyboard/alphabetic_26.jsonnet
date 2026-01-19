@@ -15,9 +15,7 @@ local swipeStyles = import '../lib/swipeStyles.libsonnet';
 // 划动以及长按数据
 local swipe_up = std.get(swipeData, 'swipe_up', {});
 local swipe_down = std.get(swipeData, 'swipe_down', {});
-local hintSymbolsData = std.get(_hintSymbolsData, 'pinyin', {});
-
-local isBindSchema = std.objectHas(others, '英文键盘方案');
+local hintSymbolsData = std.get(_hintSymbolsData, 'alphabetic', {});
 
 local createButton(params={}) =
   local isLetter = std.get(params, 'isLetter', true);
@@ -42,9 +40,9 @@ local createButton(params={}) =
     ]),
     [if isLetter then 'capsLockedStateForegroundStyle']: self.uppercasedStateForegroundStyle,  // 同uppercaseStateForegroundStyle
     hintStyle: params.key + 'ButtonHintStyle',
-    action: std.get(params, 'action', { [if isBindSchema then 'character' else 'symbol']: params.key }),
+    action: std.get(params, 'action', { character: params.key }),
     [if isLetter then 'uppercasedStateAction']: {
-      [if isBindSchema then 'character' else 'symbol']: std.asciiUpper(params.key),
+      character: std.asciiUpper(params.key),
     },
     repeatAction: std.get(params, 'repeatAction'),
     [if std.objectHas(swipe_up, params.key) then 'swipeUpAction']: swipe_up[params.key].action,
@@ -58,12 +56,10 @@ local createButton(params={}) =
     ],
   });
 
-
 local keyboard(theme, orientation) =
   {
     local ButtonSize = keyboardLayout.getButtonSize(theme, orientation),
 
-    [if isBindSchema then 'rimeSchema']: others['英文键盘方案'],
     preeditHeight: others[if orientation == 'portrait' then '竖屏' else '横屏']['preedit高度'],
     toolbarHeight: others[if orientation == 'portrait' then '竖屏' else '横屏']['toolbar高度'],
     keyboardHeight: others[if orientation == 'portrait' then '竖屏' else '横屏']['keyboard高度'],
@@ -74,7 +70,6 @@ local keyboard(theme, orientation) =
         size: std.get(ButtonSize, '普通键size'),
       }
     ),
-
 
     qButtonHintStyle: {
       backgroundStyle: 'alphabeticHintBackgroundStyle',
@@ -192,7 +187,7 @@ local keyboard(theme, orientation) =
     pButton: createButton(
       params={
         key: 'p',
-        size: std.get(ButtonSize, '普通键size'),
+        size: std.get(ButtonSize, 'p键size'),
       }
     ),
 
@@ -228,6 +223,7 @@ local keyboard(theme, orientation) =
       foregroundStyle: 'sButtonHintForegroundStyle',
       swipeUpForegroundStyle: 'sButtonSwipeUpHintForegroundStyle',
     },
+
     dButton: createButton(
       params={
         key: 'd',
@@ -319,7 +315,6 @@ local keyboard(theme, orientation) =
       foregroundStyle: 'lButtonHintForegroundStyle',
       swipeUpForegroundStyle: 'lButtonSwipeUpHintForegroundStyle',
     },
-
     shiftButton: createButton(
       params={
         key: 'shift',
@@ -373,7 +368,7 @@ local keyboard(theme, orientation) =
       params={
         buttonStyleType: 'geometry',
         insets: { top: 3, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(蓝色)'],
+        normalColor: color[theme]['enter键背景(绿色)'],
         highlightColor: color[theme]['功能键背景颜色-高亮'],
         cornerRadius: 7,
         normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
@@ -491,6 +486,7 @@ local keyboard(theme, orientation) =
         // center: { y: 0.53 },
       }
     ),
+
     EnZhButton: createButton(
       params={
         key: 'EnZh',
@@ -564,6 +560,10 @@ local keyboard(theme, orientation) =
         key: 'space',
         size: ButtonSize['space键size'],
         backgroundStyle: 'alphabeticBackgroundStyle',
+        foregroundStyle: [
+          'spaceButtonForegroundStyle',
+          'spaceButtonForegroundStyle2',
+        ],
         action: 'space',
         isLetter: false,
       }
@@ -578,11 +578,21 @@ local keyboard(theme, orientation) =
         center: center['功能键前景文字偏移'] { y: 0.5 },
       }
     ),
+
+    // 显示方案名
+    spaceButtonForegroundStyle2: utils.makeTextStyle({
+      text: '$rimeSchemaName',
+      fontSize: 8,
+      center: { x: 0.17, y: 0.2 },
+      normalColor: color[theme]['划动字符颜色'],
+      highlightColor: color[theme]['划动字符颜色'],
+    }),
+
     spaceRightButton: createButton(
       params={
         key: 'spaceRight',
         size: ButtonSize['spaceRight键size'],
-        action: { symbol: '.' },
+        action: { character: ',' },
         backgroundStyle: 'alphabeticBackgroundStyle',
         foregroundStyle: [
           'spaceRightButtonForegroundStyle',
@@ -598,16 +608,17 @@ local keyboard(theme, orientation) =
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: { x: 0.5, y: 0.6 },
+        center: { x: 0.58, y: 0.25 },  // 向右调整0.08，向上调整0.1
       }
     ),
+
     spaceRightButtonForegroundStyle2: utils.makeTextStyle(
       params={
         text: '.',
         normalColor: color[theme]['按键前景颜色'],
         highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
-        center: { x: 0.5, y: 0.4 },
+        center: { x: 0.58, y: 0.55 },  // 向右调整0.08，向上调整0.1
       }
     ),
 
@@ -658,8 +669,6 @@ local keyboard(theme, orientation) =
           conditionValue: [9],
         },
       ],
-      action: 'enter',
-
       // 按键通知
       notification: [
         'garyReturnKeyTypeNotification',
@@ -682,8 +691,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle6: utils.makeSystemImageStyle(
       params={
         systemImageName: 'magnifyingglass',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -692,8 +701,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle7: utils.makeSystemImageStyle(
       params={
         systemImageName: 'paperplane',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -702,8 +711,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle14: utils.makeSystemImageStyle(
       params={
         systemImageName: 'arrowshape.turn.up.forward',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -712,8 +721,8 @@ local keyboard(theme, orientation) =
     enterButtonForegroundStyle9: utils.makeSystemImageStyle(
       params={
         systemImageName: 'checkmark.app.stack',
-        normalColor: color[theme]['长按选中字体颜色'],
-        highlightColor: color[theme]['长按非选中字体颜色'],
+        normalColor: color[theme]['按键前景颜色'],
+        highlightColor: color[theme]['按键前景颜色'],
         fontSize: fontSize['按键前景文字大小'],
         center: center['功能键前景文字偏移'],
       }
@@ -723,7 +732,7 @@ local keyboard(theme, orientation) =
       params={
         buttonStyleType: 'geometry',
         insets: { top: 4, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(蓝色)'],
+        normalColor: color[theme]['enter键背景(绿色)'],
         highlightColor: color[theme]['功能键背景颜色-高亮'],
         cornerRadius: 7,
         normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
@@ -763,7 +772,6 @@ local keyboard(theme, orientation) =
       backgroundStyle: 'enterButtonBlueBackgroundStyle',
       foregroundStyle: 'enterButtonForegroundStyle9',
     },
-
     alphabeticBackgroundStyle: utils.makeGeometryStyle(
       params={
         insets: { top: 3.5, left: 2.5, bottom: 3.5, right: 2.5 },
@@ -794,16 +802,16 @@ local keyboard(theme, orientation) =
         shadowOffset: { x: 0, y: 5 },
       }
     ),
-    ButtonScaleAnimation: animation['26键按键动画'],
+
     alphabeticHintSymbolsBackgroundStyle: hintSymbolsStyles['长按背景样式'],
     alphabeticHintSymbolsSelectedStyle: hintSymbolsStyles['长按选中背景样式'],
-
+    ButtonScaleAnimation: animation['26键按键动画'],
   };
 
 {
   new(theme, orientation):
     keyboard(theme, orientation) +  // 按键区
-    keyboardLayout.getEnLayout(theme, orientation) +  // 布局
+    keyboardLayout.getAlphabeticLayout(theme, orientation) +  // 布局
     swipeStyles.makeSwipeStyles(theme, {
       swipe_up: swipe_up,
       swipe_down: swipe_down,
