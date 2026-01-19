@@ -60,7 +60,7 @@
       center: { x: 0.5, y: 0.25 },
     },
     '123': { action: { keyboardType: 'symbolic' }, label: { text: '' } },
-    spaceRight: { action: { character: '。' }, label: { text: '' } },
+    spaceRight: { action: { character: '，' }, label: { text: '' } },
     space: { action: { shortcut: '#次选上屏' }, label: { text: '' } },
     backspace: { action: { shortcut: '#undo' }, label: { text: '' } },
     //shift: { action: { keyboardType: 'alphabetic' }, label: { text: '' } },

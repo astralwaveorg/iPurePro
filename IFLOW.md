@@ -10,6 +10,7 @@ iPure·Pro 是一款基于 Hamster 输入法的皮肤配置项目，使用 Jsonn
 - 提供滑动和长按快捷功能
 - 适配 iPhone 和 iPad 的多种屏幕方向
 - 智能回车键（根据输入框类型自动变化）
+- 模块化架构，易于维护和扩展
 
 ## 技术栈
 
@@ -23,6 +24,7 @@ iPure·Pro 是一款基于 Hamster 输入法的皮肤配置项目，使用 Jsonn
 ```
 iPurePro/
 ├── config.yaml              # 皮肤配置元数据（生成后）
+├── build_skin.sh            # 构建脚本，自动生成皮肤包
 ├── jsonnet/                 # Jsonnet 源文件（配置文件，需要版本管理）
 │   ├── main.jsonnet        # 主入口文件，定义所有键盘配置
 │   ├── keyboard/           # 键盘布局定义（具体键盘配置文件）
@@ -34,21 +36,33 @@ iPurePro/
 │   │   ├── emoji_portrait.jsonnet     # Emoji键盘（已注释）
 │   │   └── panel.jsonnet              # 面板键盘
 │   └── lib/               # 共享库文件（可修改的配置文件）
-│       ├── animation.libsonnet        # 动画配置
-│       ├── center.libsonnet           # 中心偏移配置
-│       ├── collectionData.libsonnet   # 集合数据
-│       ├── color.libsonnet            # 颜色配置（亮色/暗色主题）
-│       ├── fontSize.libsonnet         # 字体大小配置
-│       ├── hintSymbolsData.libsonnet  # 长按提示符号数据
-│       ├── hintSymbolsStyles.libsonnet# 长按提示符号样式
-│       ├── keyboardLayout.libsonnet   # 键盘布局参数
-│       ├── others.libsonnet           # 其他配置（高度、方案等）
-│       ├── swipeData.libsonnet        # 滑动操作数据（中文）
-│       ├── swipeData-en.libsonnet     # 滑动操作数据（英文）
-│       ├── swipeStyles.libsonnet      # 滑动样式
-│       ├── toolbar.libsonnet          # 工具栏配置（中文）
-│       ├── toolbar-en.libsonnet       # 工具栏配置（英文）
-│       └── utils.libsonnet            # 工具函数
+│       ├── core/          # 核心库（常量、主题、工具函数）
+│       │   ├── constants.libsonnet        # 常量定义
+│       │   ├── theme.libsonnet            # 主题定义
+│       │   ├── utils.libsonnet            # 工具函数
+│       │   ├── layout.libsonnet           # 布局定义
+│       │   └── buttonSize.libsonnet       # 按键尺寸定义
+│       ├── components/   # 组件库（按键组件）
+│       │   └── button.libsonnet           # 按键创建函数
+│       ├── styles/        # 样式库（样式生成）
+│       │   └── generator.libsonnet        # 样式生成函数
+│       ├── data/          # 数据库（滑动、提示、集合数据）
+│       │   ├── swipeData.libsonnet        # 滑动手势数据
+│       │   ├── hintSymbolsData.libsonnet  # 提示符号数据
+│       │   └── collectionData.libsonnet   # 集合数据
+│       ├── animation.libsonnet            # 动画配置
+│       ├── center.libsonnet               # 中心偏移配置
+│       ├── color.libsonnet                # 颜色配置（亮色/暗色主题）
+│       ├── fontSize.libsonnet             # 字体大小配置
+│       ├── hintSymbolsStyles.libsonnet    # 长按提示符号样式
+│       ├── keyboardLayout.libsonnet       # 键盘布局参数
+│       ├── others.libsonnet               # 其他配置（高度、方案等）
+│       ├── swipeData.libsonnet            # 滑动操作数据（中文）
+│       ├── swipeData-en.libsonnet         # 滑动操作数据（英文）
+│       ├── swipeStyles.libsonnet          # 滑动样式
+│       ├── toolbar.libsonnet              # 工具栏配置（中文）
+│       ├── toolbar-en.libsonnet           # 工具栏配置（英文）
+│       └── utils.libsonnet                # 工具函数（兼容性）
 ├── light/                    # 亮色主题生成的 YAML 文件（自动生成，不追踪）
 │   ├── alphabetic_26_portrait.yaml
 │   ├── alphabetic_26_landscape.yaml
@@ -87,15 +101,87 @@ iPurePro/
 - **panel.jsonnet**：面板键盘（浮动模式）
 
 ### lib/ 目录
-包含共享的库文件，提供可复用的配置和工具函数：
-- **配置类文件**：定义颜色、字体大小、布局参数等基础配置
-- **数据类文件**：定义滑动操作数据、长按提示数据、工具栏数据等
-- **工具类文件**：提供样式生成、工具函数等
+包含共享的库文件，提供可复用的配置和工具函数。
+
+#### 新增模块化架构（2026年重构）
+
+项目已进行全面重构，采用模块化架构，提高代码的可维护性和扩展性：
+
+**1. 核心库 (core/)**
+- **constants.libsonnet**：集中管理所有常量
+  - 按钮尺寸常量（insets、corner radius、scale）
+  - 字体大小常量（候选、按键、滑动、工具栏等）
+  - 位置偏移常量（按键文本、滑动、工具栏等）
+  - 布局常量（列比例、横屏按键宽度等）
+  - 动画常量
+
+- **theme.libsonnet**：主题定义
+  - 亮色主题（light）
+  - 暗色主题（dark）
+  - 每个主题包含字母键、功能键、回车键等配置
+  - 修复了颜色命名错误（'enter键背景(蓝色)' → 'enter键背景(绿色)'）
+
+- **utils.libsonnet**：工具函数
+  - makeTextStyle()：创建文本样式
+  - makeSymbolStyle()：创建符号样式
+  - makeGeometryStyle()：创建几何样式
+  - generate26KeyStyles()：批量生成26键样式
+
+- **layout.libsonnet**：布局定义
+  - 竖屏布局
+  - 横屏布局
+  - 键盘布局参数
+
+- **buttonSize.libsonnet**：按键尺寸定义
+  - 竖屏按键尺寸
+  - 横屏按键尺寸
+
+**2. 组件库 (components/)**
+- **button.libsonnet**：按键创建函数
+  - createLetterButton()：创建字母按键
+  - createEnterButton()：创建回车按键
+  - createShiftButton()：创建Shift按键
+  - 等等
+
+**3. 样式库 (styles/)**
+- **generator.libsonnet**：样式生成函数
+  - generateBaseStyles()：生成基础样式
+  - generateEnterButtonStyles()：生成回车按键样式
+  - generateFunctionKeyStyles()：生成功能键样式
+
+**4. 数据库 (data/)**
+- **swipeData.libsonnet**：滑动手势数据
+  - swipeUp：上滑操作定义
+  - swipeDown：下滑操作定义
+
+- **hintSymbolsData.libsonnet**：提示符号数据
+  - 长按提示符号定义
+
+- **collectionData.libsonnet**：集合数据
+  - 符号集合数据
+  - 数字集合数据
+
+**5. 兼容性库（保留原有文件）**
+为了保持向后兼容性，原有的lib文件仍然保留：
+- **animation.libsonnet**：动画配置
+- **center.libsonnet**：中心偏移配置
+- **color.libsonnet**：颜色配置（已修复颜色命名错误）
+- **fontSize.libsonnet**：字体大小配置
+- **hintSymbolsStyles.libsonnet**：长按提示符号样式
+- **keyboardLayout.libsonnet**：键盘布局参数
+- **others.libsonnet**：其他配置（高度、方案等）
+- **swipeData.libsonnet**：滑动操作数据（中文）
+- **swipeData-en.libsonnet**：滑动操作数据（英文）
+- **swipeStyles.libsonnet**：滑动样式
+- **toolbar.libsonnet**：工具栏配置（中文）
+- **toolbar-en.libsonnet**：工具栏配置（英文）
+- **utils.libsonnet**：工具函数（兼容性）
 
 **重要说明：**
 - `jsonnet/` 目录下的所有文件都是**配置文件**，可以修改
 - 只有 `light/` 和 `dark/` 目录下的 `.yaml` 文件是自动生成的，不需要版本管理
 - 修改任何 Jsonnet 文件后，需要运行构建命令重新生成 YAML 文件
+- 新的模块化架构使得代码更易于维护和扩展
 
 ## 构建和运行
 
@@ -118,10 +204,30 @@ jsonnet -S -m . jsonnet/main.jsonnet
 3. 输出到对应的 `light/` 和 `dark/` 目录
 4. 生成 `config.yaml` 配置文件
 
+### 构建皮肤包
+
+使用项目提供的构建脚本自动生成皮肤包：
+
+```bash
+bash build_skin.sh
+```
+
+**脚本功能：**
+1. 清理之前的构建文件
+2. 创建构建目录
+3. 复制必要的文件（config.yaml、light/、dark/、resources/、demo.png）
+4. 打包成 zip 文件
+5. 重命名为 .cskin 文件
+6. 复制到目标位置（iCloud Drive）
+7. 清理临时文件
+
+**输出位置：**
+`/Users/athena/Library/Mobile Documents/com~apple~CloudDocs/SKINS/iPure·Pro.cskin`
+
 ### 安装方法
 
 1. 执行构建命令生成配置文件
-2. 将生成的文件放入 Hamster 输入法的皮肤目录
+2. 将生成的 `.cskin` 文件放入 Hamster 输入法的皮肤目录
 3. 在输入法设置中选择 iPure·Pro 皮肤
 
 ## 开发约定
@@ -138,7 +244,7 @@ jsonnet -S -m . jsonnet/main.jsonnet
 
 ### 主题配置
 
-主题配置在 `jsonnet/lib/color.libsonnet` 中定义，包含：
+主题配置在 `jsonnet/lib/color.libsonnet` 和 `jsonnet/lib/core/theme.libsonnet` 中定义，包含：
 
 **亮色主题 (light)：**
 - 字母键背景：白色 (#FFFFFF)
@@ -152,6 +258,8 @@ jsonnet -S -m . jsonnet/main.jsonnet
 - 主色调：#23C891（绿色）
 - 按键前景：白色
 
+**注意：** 已修复颜色命名错误，回车键背景现在正确命名为 'enter键背景(绿色)'。
+
 ### 功能特性
 
 #### 1. 滑动功能
@@ -162,12 +270,12 @@ jsonnet -S -m . jsonnet/main.jsonnet
 - **下滑**：特殊符号、快捷操作（撤销、重做等）
 
 滑动数据定义在：
-- `jsonnet/lib/swipeData.libsonnet`（中文）
+- `jsonnet/lib/data/swipeData.libsonnet`（中文）
 - `jsonnet/lib/swipeData-en.libsonnet`（英文）
 
 #### 2. 长按功能
 
-长按按键显示候选字符或快捷操作，数据定义在 `jsonnet/lib/hintSymbolsData.libsonnet`。
+长按按键显示候选字符或快捷操作，数据定义在 `jsonnet/lib/data/hintSymbolsData.libsonnet`。
 
 #### 3. 智能回车
 
@@ -184,7 +292,7 @@ jsonnet -S -m . jsonnet/main.jsonnet
 
 ### 字体大小配置
 
-字体大小定义在 `jsonnet/lib/fontSize.libsonnet`：
+字体大小定义在 `jsonnet/lib/fontSize.libsonnet` 和 `jsonnet/lib/core/constants.libsonnet`：
 - 中文按键：18pt
 - 英文按键：19pt
 - 滑动符号：12pt
@@ -192,7 +300,7 @@ jsonnet -S -m . jsonnet/main.jsonnet
 
 ### 按键位置配置
 
-按键位置和尺寸定义在 `jsonnet/lib/keyboardLayout.libsonnet`：
+按键位置和尺寸定义在 `jsonnet/lib/center.libsonnet` 和 `jsonnet/lib/core/layout.libsonnet`：
 - 字母按键垂直偏移：0.55
 - 功能键偏移：0.45
 
@@ -243,17 +351,23 @@ jsonnet -S -m . jsonnet/main.jsonnet
 
 3. **jsonnet/lib/color.libsonnet**：颜色配置，定义所有主题颜色
 
-4. **jsonnet/lib/keyboardLayout.libsonnet**：键盘布局参数，包括按键尺寸、位置等
+4. **jsonnet/lib/core/theme.libsonnet**：主题定义（新架构）
+
+5. **jsonnet/lib/keyboardLayout.libsonnet**：键盘布局参数，包括按键尺寸、位置等
+
+6. **jsonnet/lib/core/constants.libsonnet**：常量定义（新架构）
 
 ### 关键函数
 
-在 `jsonnet/lib/utils.libsonnet` 中定义了多个工具函数：
+在 `jsonnet/lib/utils.libsonnet` 和 `jsonnet/lib/core/utils.libsonnet` 中定义了多个工具函数：
 
 - `makeSystemImageStyle()`：创建 SF Symbols 图标样式
 - `makeImageStyle()`：创建自定义图片样式
 - `makeTextStyle()`：创建文本样式
 - `makeGeometryStyle()`：创建几何图形样式
 - `genPinyinStyles()`：批量生成拼音按键前景样式
+- `genAlphabeticStyles()`：批量生成字母按键前景样式
+- `genNumberStyles()`：批量生成数字按键前景样式
 - `genHintStyles()`：批量生成提示样式
 
 ## 修改指南
@@ -267,6 +381,70 @@ jsonnet -S -m . jsonnet/main.jsonnet
 2. **屏幕方向**：竖屏、横屏
 3. **主题模式**：亮色、暗色
 4. **设备类型**：iPhone、iPad
+
+### 使用新的模块化架构
+
+项目已重构为模块化架构，推荐使用新的核心库进行修改：
+
+#### 修改常量
+
+编辑 `jsonnet/lib/core/constants.libsonnet`：
+```jsonnet
+{
+  BUTTON: {
+    INSETS: { top: 3.5, left: 2.5, bottom: 3.5, right: 2.5 },
+    CORNER_RADIUS: 7,
+    SCALE: 0.87,
+  },
+  FONT_SIZE: {
+    BUTTON: {
+      TEXT: 18,
+      ENGLISH: 19,
+      SYMBOL: 14,
+    },
+  },
+  // ...
+}
+```
+
+#### 修改主题
+
+编辑 `jsonnet/lib/core/theme.libsonnet`：
+```jsonnet
+{
+  light: {
+    alphabeticKey: {
+      backgroundNormal: '#FFFFFF',
+      backgroundHighlight: '#ABB0BA',
+      textNormal: '#000000',
+    },
+    enterKey: {
+      backgroundGreen: '#23C891',
+      textNormal: '#000000',
+    },
+  },
+  dark: {
+    // 暗色主题配置
+  }
+}
+```
+
+#### 修改颜色（兼容性）
+
+如果需要修改 `jsonnet/lib/color.libsonnet`（向后兼容）：
+```jsonnet
+{
+  light: {
+    '字母键背景颜色-普通': '#FFFFFF',
+    '字母键背景颜色-高亮': '#ABB0BA',
+    '按键前景颜色': '#000000',
+    // ...
+  },
+  dark: {
+    // 暗色主题配置
+  }
+}
+```
 
 ### 修改示例
 
@@ -301,7 +479,7 @@ symbolButtonForegroundStyle: utils.makeTextStyle(
     normalColor: color[theme]['按键前景颜色'],
     highlightColor: color[theme]['按键前景颜色'],
     fontSize: fontSize['按键前景文字大小'],
-    center: center['功能键前景文字偏移'],
+    center: { x: 0.5, y: 0.48 },  // 向上调整0.02
   }
 ),
 ```
@@ -315,12 +493,12 @@ symbolButtonForegroundStyle: utils.makeTextStyle(
 **需要修改的文件**：
 - `jsonnet/keyboard/pinyin_26.jsonnet` - 中文拼音键盘
 - `jsonnet/keyboard/alphabetic_26.jsonnet` - 英文字母键盘
-- `jsonnet/lib/swipeData.libsonnet` - 中文滑动数据
-- `jsonnet/lib/swipeData-en.libsonnet` - 英文滑动数据
+- `jsonnet/lib/data/swipeData.libsonnet` - 中文滑动数据
+- `jsonnet/lib/swipeData-en.libsonnet` - 英文滑动数据（兼容性）
 
 **修改方法**：
 
-1. **修改滑动数据**（swipeData.libsonnet）：
+1. **修改滑动数据**（data/swipeData.libsonnet）：
 ```jsonnet
 // 修改 spaceRight 的上划操作
 spaceRight: { action: { character: '，' }, label: { text: '' } },
@@ -345,7 +523,7 @@ spaceRightButtonForegroundStyle: utils.makeTextStyle(
     normalColor: color[theme]['按键前景颜色'],
     highlightColor: color[theme]['按键前景颜色'],
     fontSize: fontSize['按键前景文字大小'],
-    center: { x: 0.5, y: 0.35 },  // 上方位置
+    center: { x: 0.58, y: 0.25 },  // 向右调整0.08，向上调整0.1
   }
 ),
 
@@ -355,7 +533,7 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
     normalColor: color[theme]['按键前景颜色'],
     highlightColor: color[theme]['按键前景颜色'],
     fontSize: fontSize['按键前景文字大小'],
-    center: { x: 0.5, y: 0.65 },  // 下方位置
+    center: { x: 0.58, y: 0.55 },  // 向右调整0.08，向上调整0.1
   }
 ),
 ```
@@ -366,13 +544,25 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
 
 **需要修改的文件**：
 - `jsonnet/lib/fontSize.libsonnet` - 字体大小配置
+- 或 `jsonnet/lib/core/constants.libsonnet` - 常量定义（新架构）
 
 **修改方法**：
 ```jsonnet
+// 在 fontSize.libsonnet 中
 {
   '上划文字大小': 12,  // 修改这个值
   '下划文字大小': 12,  // 修改这个值
   // ...
+}
+
+// 或在 constants.libsonnet 中
+{
+  FONT_SIZE: {
+    SWIPE: {
+      PORTRAIT: 12,  // 修改这个值
+      LANDSCAPE: 9,
+    },
+  },
 }
 ```
 
@@ -383,10 +573,12 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
 **需求**：调整亮色主题的按键背景颜色
 
 **需要修改的文件**：
-- `jsonnet/lib/color.libsonnet` - 颜色配置
+- `jsonnet/lib/color.libsonnet` - 颜色配置（兼容性）
+- 或 `jsonnet/lib/core/theme.libsonnet` - 主题定义（新架构）
 
 **修改方法**：
 ```jsonnet
+// 在 color.libsonnet 中
 {
   light: {
     '字母键背景颜色-普通': '#FFFFFF',  // 修改这个值
@@ -397,19 +589,29 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
     // 暗色主题配置
   }
 }
+
+// 或在 theme.libsonnet 中
+{
+  light: {
+    alphabeticKey: {
+      backgroundNormal: '#FFFFFF',  // 修改这个值
+      backgroundHighlight: '#ABB0BA',
+      textNormal: '#000000',
+    },
+  },
+  dark: {
+    // 暗色主题配置
+  }
+}
 ```
-
-### 修改颜色
-
-编辑 `jsonnet/lib/color.libsonnet`，修改对应主题的颜色值。
 
 ### 修改滑动操作
 
-编辑 `jsonnet/lib/swipeData.libsonnet`（中文）或 `jsonnet/lib/swipeData-en.libsonnet`（英文）。
+编辑 `jsonnet/lib/data/swipeData.libsonnet`（中文）或 `jsonnet/lib/swipeData-en.libsonnet`（英文）。
 
 ### 修改字体大小
 
-编辑 `jsonnet/lib/fontSize.libsonnet`。
+编辑 `jsonnet/lib/fontSize.libsonnet` 或 `jsonnet/lib/core/constants.libsonnet`。
 
 ### 修改工具栏
 
@@ -421,6 +623,49 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
 2. 在 `jsonnet/main.jsonnet` 中导入并生成配置
 3. 在 `config.yaml` 中添加映射关系
 
+## 重构说明（2026年）
+
+### 重构目标
+
+项目已进行全面重构，主要目标是：
+1. **减少引用** - 通过核心库统一管理常量和工具函数
+2. **优化结构** - 清晰的模块分离（core/components/data/styles）
+3. **易于修改** - 集中化的常量和配置管理
+4. **变量命名准确** - 修复了颜色命名错误
+5. **保持功能不变** - 所有现有功能完整保留
+
+### 重构内容
+
+1. **新增核心库模块** (`jsonnet/lib/core/`)
+   - constants.libsonnet - 常量定义
+   - theme.libsonnet - 主题定义
+   - utils.libsonnet - 工具函数
+   - layout.libsonnet - 布局定义
+   - buttonSize.libsonnet - 按键尺寸定义
+
+2. **新增组件模块** (`jsonnet/lib/components/`)
+   - button.libsonnet - 按键创建函数
+
+3. **新增样式模块** (`jsonnet/lib/styles/`)
+   - generator.libsonnet - 样式生成函数
+
+4. **新增数据模块** (`jsonnet/lib/data/`)
+   - swipeData.libsonnet - 滑动手势数据
+   - hintSymbolsData.libsonnet - 提示符号数据
+   - collectionData.libsonnet - 集合数据
+
+5. **修复颜色命名错误**
+   - 'enter键背景(蓝色)' → 'enter键背景(绿色)'
+   - 颜色 #23C891 是绿色，不是蓝色
+
+6. **更新现有库文件**
+   - 所有原始lib文件已恢复并保持兼容性
+   - 键盘文件已更新以使用新的库结构
+
+### 向后兼容性
+
+为了保持向后兼容性，原有的lib文件仍然保留在 `jsonnet/lib/` 目录中。新的模块化架构与原有架构并存，开发者可以选择使用新的核心库或继续使用原有的库文件。
+
 ## 注意事项
 
 1. 修改 Jsonnet 文件后，必须重新执行构建命令生成 YAML 文件
@@ -428,6 +673,8 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
 3. 中文和英文的滑动操作数据是分开的，需要分别修改
 4. 按键尺寸和位置需要考虑不同设备的适配
 5. 使用 SF Symbols 图标时，确保图标名称正确（参考 Apple 官方文档）
+6. 新的模块化架构提供了更好的代码组织，推荐使用新的核心库进行开发
+7. 修改常量时，优先考虑使用 `jsonnet/lib/core/constants.libsonnet`
 
 ## 作者信息
 
