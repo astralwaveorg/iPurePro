@@ -4,7 +4,6 @@ local theme = import '../core/theme.libsonnet';
 
 // 创建文本样式
 local makeTextStyle = function(text, fontSize, color, center, fontWeight='medium') {
-  {
     buttonStyleType: 'text',
     text: text,
     fontSize: fontSize,
@@ -12,12 +11,10 @@ local makeTextStyle = function(text, fontSize, color, center, fontWeight='medium
     normalColor: color,
     highlightColor: color,
     center: center,
-  };
 };
 
 // 创建SF符号样式
 local makeSymbolStyle = function(symbolName, fontSize, color, center, fontWeight='medium') {
-  {
     buttonStyleType: 'systemImage',
     systemImageName: symbolName,
     fontSize: fontSize,
@@ -25,12 +22,10 @@ local makeSymbolStyle = function(symbolName, fontSize, color, center, fontWeight
     normalColor: color,
     highlightColor: color,
     center: center,
-  };
 };
 
 // 创建几何样式
 local makeGeometryStyle = function(color, cornerRadius, insets, lowerEdgeColor) {
-  {
     buttonStyleType: 'geometry',
     normalColor: color,
     highlightColor: color,
@@ -38,31 +33,27 @@ local makeGeometryStyle = function(color, cornerRadius, insets, lowerEdgeColor) 
     insets: insets,
     normalLowerEdgeColor: lowerEdgeColor,
     highlightLowerEdgeColor: lowerEdgeColor,
-  };
 };
 
 // 创建图片样式
 local makeImageStyle = function(file, image, contentMode, insets) {
-  {
     buttonStyleType: 'fileImage',
     contentMode: contentMode,
     normalImage: { file: file, image: image },
     insets: insets,
-  };
 };
 
 // 创建按键样式
-local makeButtonStyle = function(theme, keyType, state) {
-  local themeData = theme.getTheme(theme);
+local makeButtonStyle = function(themeName, keyType, state) {
+  local themeData = theme.getTheme(themeName);
   local keyData = themeData[keyType];
   local suffix = if state == 'highlight' then 'Highlight' else 'Normal';
-  
   makeGeometryStyle(
-    keyData['background' + suffix],
+    keyData["background" + suffix],
     constants.BUTTON.CORNER_RADIUS,
     constants.BUTTON.INSETS,
-    keyData['backgroundLowerEdge' + suffix]
-  );
+    keyData["backgroundLowerEdge" + suffix]
+  )
 };
 
 // 创建按键前景样式

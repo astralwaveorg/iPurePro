@@ -8,50 +8,50 @@
     HINT_CORNER_RADIUS: 7,
     HINT_SHADOW_OFFSET: { x: 0, y: 5 },
   },
-  
+
   // 尺寸常量
   DIMENSIONS: {
     KEYBOARD_HEIGHT: {
-      PORTRAIT: '285/667',
-      LANDSCAPE: '285/667',
+      PORTRAIT: "285/667",
+      LANDSCAPE: "285/667",
     },
     TOOLBAR_HEIGHT: {
-      PORTRAIT: '44/667',
-      LANDSCAPE: '44/667',
+      PORTRAIT: "44/667",
+      LANDSCAPE: "44/667",
     },
     PREEDIT_HEIGHT: {
-      PORTRAIT: '36/667',
-      LANDSCAPE: '36/667',
+      PORTRAIT: "36/667",
+      LANDSCAPE: "36/667",
     },
   },
-  
+
   // 动画常量
   ANIMATION: {
     BUTTON_SCALE: {
-      type: 'scale',
+      type: "scale",
       isAutoReverse: true,
       pressDuration: 60,
       releaseDuration: 80,
       scale: 0.87,
     },
   },
-  
+
   // 布局常量
   LAYOUT: {
     COLUMN_RATIOS: {
       PORTRAIT: {
-        LEFT: '29/183',
-        MIDDLE: '125/183',
-        RIGHT: '29/183',
+        LEFT: "29/183",
+        MIDDLE: "125/183",
+        RIGHT: "29/183",
       },
       LANDSCAPE: {
-        LEFT: '2/5',
-        MIDDLE: '1/5',
-        RIGHT: '2/5',
+        LEFT: "2/5",
+        MIDDLE: "1/5",
+        RIGHT: "2/5",
       },
     },
   },
-  
+
   // 字体大小常量
   FONT_SIZE: {
     CANDIDATE: {
@@ -79,7 +79,7 @@
       SYMBOL: 16,
     },
   },
-  
+
   // 位置偏移常量
   OFFSET: {
     BUTTON_TEXT: { x: 0.5, y: 0.55 },
@@ -111,22 +111,22 @@
       SYMBOL: { y: 0.4 },
     },
   },
-  
+
   // 按键宽度比例（横屏）
   LANDSCAPE_BUTTON_WIDTH: {
-    NORMAL: '146/784',
-    WIDE: '200/784',
-    SHIFT: '200/784',
-    BACKSPACE: '200/784',
-    EN_ZH: '104/784',
-    SYMBOL: '104/784',
-    NUMBER: '105.6/784',
-    SPACE: '200/784',
-    SPACE_RIGHT: '104/784',
-    ENTER: '346/784',
-    V_B_N: '209.6/784',
+    NORMAL: "146/784",
+    WIDE: "200/784",
+    SHIFT: "200/784",
+    BACKSPACE: "200/784",
+    EN_ZH: "104/784",
+    SYMBOL: "104/784",
+    NUMBER: "105.6/784",
+    SPACE: "200/784",
+    SPACE_RIGHT: "104/784",
+    ENTER: "346/784",
+    V_B_N: "209.6/784",
   },
-  
+
   // 按键宽度比例（竖屏）
   PORTRAIT_BUTTON_WIDTH: {
     NORMAL: 0.15,

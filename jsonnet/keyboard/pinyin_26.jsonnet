@@ -1,57 +1,57 @@
-local animation = import '../lib/animation.libsonnet';
-local center = import '../lib/center.libsonnet';
-local color = import '../lib/color.libsonnet';
-local fontSize = import '../lib/fontSize.libsonnet';
-local _hintSymbolsData = import '../lib/hintSymbolsData.libsonnet';
-local keyboardLayout = import '../lib/keyboardLayout.libsonnet';
-local others = import '../lib/others.libsonnet';
-local swipeData = import '../lib/swipeData.libsonnet';
-local toolbar = import '../lib/toolbar.libsonnet';
-local utils = import '../lib/utils.libsonnet';
+local animation = import "../lib/animation.libsonnet";
+local center = import "../lib/center.libsonnet";
+local color = import "../lib/color.libsonnet";
+local fontSize = import "../lib/fontSize.libsonnet";
+local _hintSymbolsData = import "../lib/hintSymbolsData.libsonnet";
+local keyboardLayout = import "../lib/keyboardLayout.libsonnet";
+local others = import "../lib/others.libsonnet";
+local swipeData = import "../lib/swipeData.libsonnet";
+local toolbar = import "../lib/toolbar.libsonnet";
+local utils = import "../lib/utils.libsonnet";
 
-local hintSymbolsStyles = import '../lib/hintSymbolsStyles.libsonnet';
-local swipeStyles = import '../lib/swipeStyles.libsonnet';
+local hintSymbolsStyles = import "../lib/hintSymbolsStyles.libsonnet";
+local swipeStyles = import "../lib/swipeStyles.libsonnet";
 
 // 划动以及长按数据
-local swipe_up = std.get(swipeData, 'swipe_up', {});
-local swipe_down = std.get(swipeData, 'swipe_down', {});
-local hintSymbolsData = std.get(_hintSymbolsData, 'pinyin', {});
+local swipe_up = std.get(swipeData, "swipe_up", {});
+local swipe_down = std.get(swipeData, "swipe_down", {});
+local hintSymbolsData = std.get(_hintSymbolsData, "pinyin", {});
 
 local createButton(params={}) =
-  local isLetter = std.get(params, 'isLetter', true);
+  local isLetter = std.get(params, "isLetter", true);
   std.prune({
-    size: std.get(params, 'size'),
-    bounds: std.get(params, 'bounds'),
-    backgroundStyle: if isLetter then 'alphabeticBackgroundStyle' else std.get(params, 'backgroundStyle', 'systemButtonBackgroundStyle'),
+    size: std.get(params, "size"),
+    bounds: std.get(params, "bounds"),
+    backgroundStyle: if isLetter then "alphabeticBackgroundStyle" else std.get(params, "backgroundStyle", "systemButtonBackgroundStyle"),
     foregroundStyle:
       if isLetter then
         std.prune([
-          params.key + 'ButtonForegroundStyle',
-          if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
-          if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
+          params.key + "ButtonForegroundStyle",
+          if std.objectHas(swipe_up, params.key) then params.key + "ButtonUpForegroundStyle" else null,
+          if std.objectHas(swipe_down, params.key) then params.key + "ButtonDownForegroundStyle" else null,
         ])
       else
-        std.get(params, 'foregroundStyle', params.key + 'ButtonForegroundStyle'),
+        std.get(params, "foregroundStyle", params.key + "ButtonForegroundStyle"),
 
-    [if isLetter then 'uppercasedStateForegroundStyle']: std.prune([
-      params.key + 'ButtonUppercasedStateForegroundStyle',
-      if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
-      if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
+    [if isLetter then "uppercasedStateForegroundStyle"]: std.prune([
+      params.key + "ButtonUppercasedStateForegroundStyle",
+      if std.objectHas(swipe_up, params.key) then params.key + "ButtonUpForegroundStyle" else null,
+      if std.objectHas(swipe_down, params.key) then params.key + "ButtonDownForegroundStyle" else null,
     ]),
-    [if isLetter then 'capsLockedStateForegroundStyle']: self.uppercasedStateForegroundStyle,  // 同uppercaseStateForegroundStyle
-    hintStyle: params.key + 'ButtonHintStyle',
-    action: std.get(params, 'action', { character: params.key }),
-    [if isLetter then 'uppercasedStateAction']: {
+    [if isLetter then "capsLockedStateForegroundStyle"]: self.uppercasedStateForegroundStyle,  // 同uppercaseStateForegroundStyle
+    hintStyle: params.key + "ButtonHintStyle",
+    action: std.get(params, "action", { character: params.key }),
+    [if isLetter then "uppercasedStateAction"]: {
       character: std.asciiUpper(params.key),
     },
-    repeatAction: std.get(params, 'repeatAction'),
-    [if std.objectHas(swipe_up, params.key) then 'swipeUpAction']: swipe_up[params.key].action,
-    [if std.objectHas(swipe_down, params.key) then 'swipeDownAction']: swipe_down[params.key].action,
-    [if std.objectHas(hintSymbolsData, params.key) then 'hintSymbolsStyle']: params.key + 'ButtonHintSymbolsStyle',
+    repeatAction: std.get(params, "repeatAction"),
+    [if std.objectHas(swipe_up, params.key) then "swipeUpAction"]: swipe_up[params.key].action,
+    [if std.objectHas(swipe_down, params.key) then "swipeDownAction"]: swipe_down[params.key].action,
+    [if std.objectHas(hintSymbolsData, params.key) then "hintSymbolsStyle"]: params.key + "ButtonHintSymbolsStyle",
 
     // 动画
     animation: [
-      'ButtonScaleAnimation',
+      "ButtonScaleAnimation",
       // 'CartoonAniamtion',
     ],
   });
@@ -60,429 +60,429 @@ local keyboard(theme, orientation) =
   {
     local ButtonSize = keyboardLayout.getButtonSize(theme, orientation),
 
-    [if std.objectHas(others, '中文键盘方案') then 'rimeSchema']: others['中文键盘方案'],
-    preeditHeight: others[if orientation == 'portrait' then '竖屏' else '横屏']['preedit高度'],
-    toolbarHeight: others[if orientation == 'portrait' then '竖屏' else '横屏']['toolbar高度'],
-    keyboardHeight: others[if orientation == 'portrait' then '竖屏' else '横屏']['keyboard高度'],
+    [if std.objectHas(others, "中文键盘方案") then "rimeSchema"]: others["中文键盘方案"],
+    preeditHeight: others[if orientation == "portrait" then "竖屏" else "横屏"]["preedit高度"],
+    toolbarHeight: others[if orientation == "portrait" then "竖屏" else "横屏"]["toolbar高度"],
+    keyboardHeight: others[if orientation == "portrait" then "竖屏" else "横屏"]["keyboard高度"],
 
     qButton: createButton(
       params={
-        key: 'q',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "q",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     qButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'qButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'qButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "qButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "qButtonSwipeUpHintForegroundStyle",
     },
 
     wButton: createButton(
       params={
-        key: 'w',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "w",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     wButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'wButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'wButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "wButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "wButtonSwipeUpHintForegroundStyle",
     },
     eButton: createButton(
       params={
-        key: 'e',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "e",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     eButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'eButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'eButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "eButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "eButtonSwipeUpHintForegroundStyle",
     },
 
     rButton: createButton(
       params={
-        key: 'r',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "r",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     rButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'rButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'rButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "rButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "rButtonSwipeUpHintForegroundStyle",
     },
 
     tButton: createButton(
       params={
-        key: 't',
-        size: std.get(ButtonSize, '普通键size'),
-        bounds: std.get(ButtonSize, 't键bounds'),
+        key: "t",
+        size: std.get(ButtonSize, "普通键size"),
+        bounds: std.get(ButtonSize, "t键bounds"),
       }
     ),
 
 
     tButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'tButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'tButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "tButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "tButtonSwipeUpHintForegroundStyle",
     },
 
     yButton: createButton(
       params={
-        key: 'y',
-        size: std.get(ButtonSize, 'y键size'),
-        bounds: std.get(ButtonSize, 'y键bounds'),
+        key: "y",
+        size: std.get(ButtonSize, "y键size"),
+        bounds: std.get(ButtonSize, "y键bounds"),
       }
     ),
 
     yButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'yButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'yButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "yButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "yButtonSwipeUpHintForegroundStyle",
     },
 
     uButton: createButton(
       params={
-        key: 'u',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "u",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     uButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'uButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'uButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "uButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "uButtonSwipeUpHintForegroundStyle",
     },
 
     iButton: createButton(
       params={
-        key: 'i',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "i",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     iButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'iButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'iButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "iButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "iButtonSwipeUpHintForegroundStyle",
     },
 
 
     oButton: createButton(
       params={
-        key: 'o',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "o",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     oButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'oButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'oButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "oButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "oButtonSwipeUpHintForegroundStyle",
     },
 
     pButton: createButton(
       params={
-        key: 'p',
-        size: std.get(ButtonSize, 'p键size'),
+        key: "p",
+        size: std.get(ButtonSize, "p键size"),
       }
     ),
 
     pButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'pButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'pButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "pButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "pButtonSwipeUpHintForegroundStyle",
     },
 
     aButton: createButton(
       params={
-        key: 'a',
-        size: std.get(ButtonSize, 'a键size'),
-        bounds: std.get(ButtonSize, 'a键bounds'),
+        key: "a",
+        size: std.get(ButtonSize, "a键size"),
+        bounds: std.get(ButtonSize, "a键bounds"),
       }
     ),
 
     aButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'aButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'aButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "aButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "aButtonSwipeUpHintForegroundStyle",
     },
 
     sButton: createButton(
       params={
-        key: 's',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "s",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     sButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'sButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'sButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "sButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "sButtonSwipeUpHintForegroundStyle",
     },
 
     dButton: createButton(
       params={
-        key: 'd',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "d",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     dButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'dButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'dButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "dButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "dButtonSwipeUpHintForegroundStyle",
     },
 
     fButton: createButton(
       params={
-        key: 'f',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "f",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     fButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'fButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'fButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "fButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "fButtonSwipeUpHintForegroundStyle",
     },
 
     gButton: createButton(
       params={
-        key: 'g',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "g",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     gButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'gButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'gButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "gButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "gButtonSwipeUpHintForegroundStyle",
     },
 
     hButton: createButton(
       params={
-        key: 'h',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "h",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     hButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'hButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'hButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "hButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "hButtonSwipeUpHintForegroundStyle",
     },
 
     jButton: createButton(
       params={
-        key: 'j',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "j",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     jButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'jButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'jButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "jButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "jButtonSwipeUpHintForegroundStyle",
     },
 
     kButton: createButton(
       params={
-        key: 'k',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "k",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     kButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'kButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'kButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "kButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "kButtonSwipeUpHintForegroundStyle",
     },
 
     lButton: createButton(
       params={
-        key: 'l',
-        size: std.get(ButtonSize, 'l键size'),
-        bounds: std.get(ButtonSize, 'l键bounds'),
+        key: "l",
+        size: std.get(ButtonSize, "l键size"),
+        bounds: std.get(ButtonSize, "l键bounds"),
       }
     ),
 
     lButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'lButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'lButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "lButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "lButtonSwipeUpHintForegroundStyle",
     },
     shiftButton: createButton(
       params={
-        key: 'shift',
-        action: 'shift',
-        size: std.get(ButtonSize, 'shift键size'),
+        key: "shift",
+        action: "shift",
+        size: std.get(ButtonSize, "shift键size"),
         isLetter: false,
       },
     ) + {
-      uppercasedStateAction: 'shift',
-      capsLockedStateForegroundStyle: 'shiftButtonCapsLockedForegroundStyle',
-      uppercasedStateForegroundStyle: 'shiftButtonUppercasedForegroundStyle',
+      uppercasedStateAction: "shift",
+      capsLockedStateForegroundStyle: "shiftButtonCapsLockedForegroundStyle",
+      uppercasedStateForegroundStyle: "shiftButtonUppercasedForegroundStyle",
       notification: [
-        'shiftStateNotification',
+        "shiftStateNotification",
       ],
     },
 
     shiftStateNotification: {
-      notificationType: 'shiftState',
-      backgroundStyle: 'shiftButtonGreenBackgroundStyle',
-      foregroundStyle: 'shiftButtonUppercasedForegroundStyle',
+      notificationType: "shiftState",
+      backgroundStyle: "shiftButtonGreenBackgroundStyle",
+      foregroundStyle: "shiftButtonUppercasedForegroundStyle",
     },
 
     shiftButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'capslock',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        systemImageName: "capslock",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         // center: { y: 0.53 },
       }
     ),
     shiftButtonUppercasedForegroundStyle: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'capslock.fill',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        systemImageName: "capslock.fill",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         // center: { y: 0.53 },
       }
     ),
     shiftButtonCapsLockedForegroundStyle: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'capslock.fill',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        systemImageName: "capslock.fill",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         // center: { y: 0.53 },
       }
     ),
     shiftButtonGreenBackgroundStyle: utils.makeGeometryStyle(
       params={
-        buttonStyleType: 'geometry',
+        buttonStyleType: "geometry",
         insets: { top: 3, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(绿色)'],
-        highlightColor: color[theme]['功能键背景颜色-高亮'],
+        normalColor: color[theme]["enter键背景(绿色)"],
+        highlightColor: color[theme]["功能键背景颜色-高亮"],
         cornerRadius: 7,
-        normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
-        highlightLowerEdgeColor: color[theme]['底边缘颜色-高亮'],
+        normalLowerEdgeColor: color[theme]["底边缘颜色-普通"],
+        highlightLowerEdgeColor: color[theme]["底边缘颜色-高亮"],
       }
     ),
 
     zButton: createButton(
       params={
-        key: 'z',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "z",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     zButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'zButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'zButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "zButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "zButtonSwipeUpHintForegroundStyle",
     },
 
     xButton: createButton(
       params={
-        key: 'x',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "x",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     xButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'xButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'xButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "xButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "xButtonSwipeUpHintForegroundStyle",
     },
 
     cButton: createButton(
       params={
-        key: 'c',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "c",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     cButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'cButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'cButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "cButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "cButtonSwipeUpHintForegroundStyle",
     },
 
     vButton: createButton(
       params={
-        key: 'v',
-        size: std.get(ButtonSize, if orientation == 'landscape' then 'v键size' else '普通键size'),
+        key: "v",
+        size: std.get(ButtonSize, if orientation == "landscape" then "v键size" else "普通键size"),
       }
     ),
 
     vButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'vButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'vButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "vButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "vButtonSwipeUpHintForegroundStyle",
     },
 
     bButton: createButton(
       params={
-        key: 'b',
-        size: std.get(ButtonSize, if orientation == 'landscape' then 'b键size' else '普通键size'),
+        key: "b",
+        size: std.get(ButtonSize, if orientation == "landscape" then "b键size" else "普通键size"),
       }
     ),
 
     bButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'bButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'bButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "bButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "bButtonSwipeUpHintForegroundStyle",
     },
 
     nButton: createButton(
       params={
-        key: 'n',
-        size: std.get(ButtonSize, if orientation == 'landscape' then 'n键size' else '普通键size'),
+        key: "n",
+        size: std.get(ButtonSize, if orientation == "landscape" then "n键size" else "普通键size"),
       }
     ),
 
     nButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'nButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'nButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "nButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "nButtonSwipeUpHintForegroundStyle",
     },
 
     mButton: createButton(
       params={
-        key: 'm',
-        size: std.get(ButtonSize, '普通键size'),
+        key: "m",
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
     mButtonHintStyle: {
-      backgroundStyle: 'alphabeticHintBackgroundStyle',
-      foregroundStyle: 'mButtonHintForegroundStyle',
-      swipeUpForegroundStyle: 'mButtonSwipeUpHintForegroundStyle',
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "mButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "mButtonSwipeUpHintForegroundStyle",
     },
     backspaceButton: createButton(
       params={
-        key: 'backspace',
-        size: ButtonSize['backspace键size'],
-        action: 'backspace',
-        repeatAction: 'backspace',
+        key: "backspace",
+        size: ButtonSize["backspace键size"],
+        action: "backspace",
+        repeatAction: "backspace",
         isLetter: false,
       }
     ),
 
     backspaceButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'delete.left',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        systemImageName: "delete.left",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         targetScale: 0.7,
         // center: { y: 0.53 },
       }
@@ -490,132 +490,132 @@ local keyboard(theme, orientation) =
 
     EnZhButton: createButton(
       params={
-        key: 'EnZh',
-        size: ButtonSize['EnZh键size'],
-        action: { keyboardType: 'alphabetic' },
+        key: "EnZh",
+        size: ButtonSize["EnZh键size"],
+        action: { keyboardType: "alphabetic" },
         isLetter: false,
-        backgroundStyle: 'alphabeticBackgroundStyle',
-        foregroundStyle: 'EnZhButtonForegroundStyle',
+        backgroundStyle: "alphabeticBackgroundStyle",
+        foregroundStyle: "EnZhButtonForegroundStyle",
       }
     ),
 
     EnZhButtonForegroundStyle: utils.makeImageStyle(
       {
-        contentMode: 'center',
-        insets: { top: 10 , bottom: 10, left: 10, right: 10 },
+        contentMode: "center",
+        insets: { top: 10, bottom: 10, left: 10, right: 10 },
         normalImage: {
-          file: 'cnen',
-          image: 'IMG1',
+          file: "cnen",
+          image: "IMG1",
         },
         highlightImage: {
-          file: 'cnen',
-          image: 'IMG1',
+          file: "cnen",
+          image: "IMG1",
         },
       }
     ),
 
     symbolButton: createButton(
       params={
-        key: 'symbol',
-        size: ButtonSize['symbol键size'],
-        action: { keyboardType: 'symbolic' },
+        key: "symbol",
+        size: ButtonSize["symbol键size"],
+        action: { keyboardType: "symbolic" },
         isLetter: false,
-        backgroundStyle: 'alphabeticBackgroundStyle',
-        foregroundStyle: 'symbolButtonForegroundStyle',
+        backgroundStyle: "alphabeticBackgroundStyle",
+        foregroundStyle: "symbolButtonForegroundStyle",
       }
     ),
 
     symbolButtonForegroundStyle: utils.makeTextStyle(
       params={
-        text: '符',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        text: "符",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         center: { x: 0.5, y: 0.48 },  // 向上调整0.02
       }
     ),
 
     numberButton: createButton(
       params={
-        key: 'number',
-        size: ButtonSize['number键size'],
-        action: { keyboardType: 'numeric' },
+        key: "number",
+        size: ButtonSize["number键size"],
+        action: { keyboardType: "numeric" },
         isLetter: false,
-        backgroundStyle: 'alphabeticBackgroundStyle',
-        foregroundStyle: 'numberButtonForegroundStyle',
+        backgroundStyle: "alphabeticBackgroundStyle",
+        foregroundStyle: "numberButtonForegroundStyle",
       }
     ),
 
     numberButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'numbers',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'] - 1,
-        center: center['功能键前景文字偏移'] { y: 0.5 },
+        systemImageName: "numbers",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"] - 1,
+        center: center["功能键前景文字偏移"] { y: 0.5 },
       }
     ),
 
     spaceButton: createButton(
       params={
-        key: 'space',
-        size: ButtonSize['space键size'],
-        backgroundStyle: 'alphabeticBackgroundStyle',
+        key: "space",
+        size: ButtonSize["space键size"],
+        backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
-          'spaceButtonForegroundStyle',
-          'spaceButtonForegroundStyle2',
+          "spaceButtonForegroundStyle",
+          "spaceButtonForegroundStyle2",
         ],
-        action: 'space',
+        action: "space",
         isLetter: false,
       }
     ) + {
       notification: [
-        'spaceButtonPreeditNotification',
+        "spaceButtonPreeditNotification",
       ],
     },
     spaceButtonPreeditNotification: {
-      notificationType: 'preeditChanged',
-      backgroundStyle: 'alphabeticBackgroundStyle',
-      foregroundStyle: 'spaceButtonPreeditForegroundStyle',
+      notificationType: "preeditChanged",
+      backgroundStyle: "alphabeticBackgroundStyle",
+      foregroundStyle: "spaceButtonPreeditForegroundStyle",
     },
     spaceButtonPreeditForegroundStyle: {
-      buttonStyleType: 'text',
-      text: '$rimeCandidate',
-      normalColor: color[theme]['按键前景颜色'],
-      highlightColor: color[theme]['按键前景颜色'],
-      fontSize: fontSize['按键前景文字大小'] - 1,
+      buttonStyleType: "text",
+      text: "$rimeCandidate",
+      normalColor: color[theme]["按键前景颜色"],
+      highlightColor: color[theme]["按键前景颜色"],
+      fontSize: fontSize["按键前景文字大小"] - 1,
       insets: { left: 5, right: 5 },
-      center: center['功能键前景文字偏移'],
+      center: center["功能键前景文字偏移"],
     },
 
     spaceButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'space',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'] - 1,
-        center: center['功能键前景文字偏移'] { y: 0.5 },
+        systemImageName: "space",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"] - 1,
+        center: center["功能键前景文字偏移"] { y: 0.5 },
       }
     ),
 
     // 显示方案名
     spaceButtonForegroundStyle2: utils.makeTextStyle({
-      text: '$rimeSchemaName',
+      text: "$rimeSchemaName",
       fontSize: 8,
       center: { x: 0.17, y: 0.2 },
-      normalColor: color[theme]['划动字符颜色'],
-      highlightColor: color[theme]['划动字符颜色'],
+      normalColor: color[theme]["划动字符颜色"],
+      highlightColor: color[theme]["划动字符颜色"],
     }),
 
     spaceRightButton: createButton(
       params={
-        key: 'spaceRight',
-        size: ButtonSize['spaceRight键size'],
-        action: { character: '。' },
-        backgroundStyle: 'alphabeticBackgroundStyle',
+        key: "spaceRight",
+        size: ButtonSize["spaceRight键size"],
+        action: { character: "。" },
+        backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
-          'spaceRightButtonForegroundStyle',
-          'spaceRightButtonForegroundStyle2',
+          "spaceRightButtonForegroundStyle",
+          "spaceRightButtonForegroundStyle2",
         ],
         isLetter: false,
       }
@@ -623,208 +623,208 @@ local keyboard(theme, orientation) =
 
     spaceRightButtonForegroundStyle: utils.makeTextStyle(
       params={
-        text: '，',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        text: "，",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         center: { x: 0.58, y: 0.25 },  // 向右调整0.08，向上调整0.1
       }
     ),
 
     spaceRightButtonForegroundStyle2: utils.makeTextStyle(
       params={
-        text: '。',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
+        text: "。",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
         center: { x: 0.58, y: 0.55 },  // 向右调整0.08，向上调整0.1
       }
     ),
 
     enterButton: createButton(
       params={
-        key: 'enter',
-        size: ButtonSize['enter键size'],
-        action: 'enter',
+        key: "enter",
+        size: ButtonSize["enter键size"],
+        action: "enter",
         isLetter: false,
       }
     ) + {
       backgroundStyle: [
         {
-          styleName: 'systemButtonBackgroundStyle',
-          conditionKey: '$returnKeyType',
+          styleName: "systemButtonBackgroundStyle",
+          conditionKey: "$returnKeyType",
           conditionValue: [0, 2, 3, 5, 8, 10, 11],
         },
         {
-          styleName: 'enterButtonBlueBackgroundStyle',
-          conditionKey: '$returnKeyType',
+          styleName: "enterButtonBlueBackgroundStyle",
+          conditionKey: "$returnKeyType",
           conditionValue: [1, 4, 6, 7, 9],
         },
       ],
       foregroundStyle: [
         {
-          styleName: 'enterButtonForegroundStyle0',
-          conditionKey: '$returnKeyType',
+          styleName: "enterButtonForegroundStyle0",
+          conditionKey: "$returnKeyType",
           conditionValue: [0, 2, 3, 5, 8, 10, 11],
         },
         {
-          styleName: 'enterButtonForegroundStyle14',
-          conditionKey: '$returnKeyType',
+          styleName: "enterButtonForegroundStyle14",
+          conditionKey: "$returnKeyType",
           conditionValue: [1, 4],
         },
         {
-          styleName: 'enterButtonForegroundStyle6',
-          conditionKey: '$returnKeyType',
+          styleName: "enterButtonForegroundStyle6",
+          conditionKey: "$returnKeyType",
           conditionValue: [6],
         },
         {
-          styleName: 'enterButtonForegroundStyle7',
-          conditionKey: '$returnKeyType',
+          styleName: "enterButtonForegroundStyle7",
+          conditionKey: "$returnKeyType",
           conditionValue: [7],
         },
         {
-          styleName: 'enterButtonForegroundStyle9',
-          conditionKey: '$returnKeyType',
+          styleName: "enterButtonForegroundStyle9",
+          conditionKey: "$returnKeyType",
           conditionValue: [9],
         },
       ],
       // 按键通知
       notification: [
-        'garyReturnKeyTypeNotification',
-        'blueReturnKeyTypeNotification14',
-        'blueReturnKeyTypeNotification6',
-        'blueReturnKeyTypeNotification7',
-        'blueReturnKeyTypeNotification9',
+        "garyReturnKeyTypeNotification",
+        "blueReturnKeyTypeNotification14",
+        "blueReturnKeyTypeNotification6",
+        "blueReturnKeyTypeNotification7",
+        "blueReturnKeyTypeNotification9",
       ],
     },
 
     enterButtonForegroundStyle0: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'return.left',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        systemImageName: "return.left",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
+        center: center["功能键前景文字偏移"],
       }
     ),
     enterButtonForegroundStyle6: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'magnifyingglass',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        systemImageName: "magnifyingglass",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
+        center: center["功能键前景文字偏移"],
       }
     ),
 
     enterButtonForegroundStyle7: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'paperplane',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        systemImageName: "paperplane",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
+        center: center["功能键前景文字偏移"],
       }
     ),
 
     enterButtonForegroundStyle14: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'arrowshape.turn.up.forward',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        systemImageName: "arrowshape.turn.up.forward",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
+        center: center["功能键前景文字偏移"],
       }
     ),
 
     enterButtonForegroundStyle9: utils.makeSystemImageStyle(
       params={
-        systemImageName: 'checkmark.app.stack',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'],
-        center: center['功能键前景文字偏移'],
+        systemImageName: "checkmark.app.stack",
+        normalColor: color[theme]["按键前景颜色"],
+        highlightColor: color[theme]["按键前景颜色"],
+        fontSize: fontSize["按键前景文字大小"],
+        center: center["功能键前景文字偏移"],
       }
     ),
 
     enterButtonBlueBackgroundStyle: utils.makeGeometryStyle(
       params={
-        buttonStyleType: 'geometry',
+        buttonStyleType: "geometry",
         insets: { top: 4, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['enter键背景(绿色)'],
-        highlightColor: color[theme]['功能键背景颜色-高亮'],
+        normalColor: color[theme]["enter键背景(绿色)"],
+        highlightColor: color[theme]["功能键背景颜色-高亮"],
         cornerRadius: 7,
-        normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
-        highlightLowerEdgeColor: color[theme]['底边缘颜色-高亮'],
+        normalLowerEdgeColor: color[theme]["底边缘颜色-普通"],
+        highlightLowerEdgeColor: color[theme]["底边缘颜色-高亮"],
       }
     ),
     // 灰色回车通知（前景 0）
     garyReturnKeyTypeNotification: {
-      notificationType: 'returnKeyType',
+      notificationType: "returnKeyType",
       returnKeyType: [0, 2, 3, 5, 8, 10, 11],
-      backgroundStyle: 'systemButtonBackgroundStyle',
-      foregroundStyle: 'enterButtonForegroundStyle0',
+      backgroundStyle: "systemButtonBackgroundStyle",
+      foregroundStyle: "enterButtonForegroundStyle0",
     },
 
     // 蓝色回车通知（按前景细分）
     blueReturnKeyTypeNotification14: {
-      notificationType: 'returnKeyType',
+      notificationType: "returnKeyType",
       returnKeyType: [1, 4],
-      backgroundStyle: 'enterButtonBlueBackgroundStyle',
-      foregroundStyle: 'enterButtonForegroundStyle14',
+      backgroundStyle: "enterButtonBlueBackgroundStyle",
+      foregroundStyle: "enterButtonForegroundStyle14",
     },
     blueReturnKeyTypeNotification6: {
-      notificationType: 'returnKeyType',
+      notificationType: "returnKeyType",
       returnKeyType: [6],
-      backgroundStyle: 'enterButtonBlueBackgroundStyle',
-      foregroundStyle: 'enterButtonForegroundStyle6',
+      backgroundStyle: "enterButtonBlueBackgroundStyle",
+      foregroundStyle: "enterButtonForegroundStyle6",
     },
     blueReturnKeyTypeNotification7: {
-      notificationType: 'returnKeyType',
+      notificationType: "returnKeyType",
       returnKeyType: [7],
-      backgroundStyle: 'enterButtonBlueBackgroundStyle',
-      foregroundStyle: 'enterButtonForegroundStyle7',
+      backgroundStyle: "enterButtonBlueBackgroundStyle",
+      foregroundStyle: "enterButtonForegroundStyle7",
     },
     blueReturnKeyTypeNotification9: {
-      notificationType: 'returnKeyType',
+      notificationType: "returnKeyType",
       returnKeyType: [9],
-      backgroundStyle: 'enterButtonBlueBackgroundStyle',
-      foregroundStyle: 'enterButtonForegroundStyle9',
+      backgroundStyle: "enterButtonBlueBackgroundStyle",
+      foregroundStyle: "enterButtonForegroundStyle9",
     },
     alphabeticBackgroundStyle: utils.makeGeometryStyle(
       params={
         insets: { top: 3.5, left: 2.5, bottom: 3.5, right: 2.5 },
-        normalColor: color[theme]['字母键背景颜色-普通'],
-        highlightColor: color[theme]['字母键背景颜色-高亮'],
+        normalColor: color[theme]["字母键背景颜色-普通"],
+        highlightColor: color[theme]["字母键背景颜色-高亮"],
         cornerRadius: 7,
-        normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
-        highlightLowerEdgeColor: color[theme]['底边缘颜色-高亮'],
+        normalLowerEdgeColor: color[theme]["底边缘颜色-普通"],
+        highlightLowerEdgeColor: color[theme]["底边缘颜色-高亮"],
       }
     ),
 
     systemButtonBackgroundStyle: utils.makeGeometryStyle(
       params={
         insets: { top: 3, left: 3, bottom: 4, right: 3 },
-        normalColor: color[theme]['功能键背景颜色-普通'],
-        highlightColor: color[theme]['功能键背景颜色-高亮'],
+        normalColor: color[theme]["功能键背景颜色-普通"],
+        highlightColor: color[theme]["功能键背景颜色-高亮"],
         cornerRadius: 7,
-        normalLowerEdgeColor: color[theme]['底边缘颜色-普通'],
-        highlightLowerEdgeColor: color[theme]['底边缘颜色-高亮'],
+        normalLowerEdgeColor: color[theme]["底边缘颜色-普通"],
+        highlightLowerEdgeColor: color[theme]["底边缘颜色-高亮"],
       }
     ),
     alphabeticHintBackgroundStyle: utils.makeGeometryStyle(
       params={
-        normalColor: color[theme]['气泡背景颜色'],
-        highlightColor: color[theme]['气泡高亮颜色'],
+        normalColor: color[theme]["气泡背景颜色"],
+        highlightColor: color[theme]["气泡高亮颜色"],
         cornerRadius: 7,
-        shadowColor: color[theme]['长按背景阴影颜色'],
+        shadowColor: color[theme]["长按背景阴影颜色"],
         shadowOffset: { x: 0, y: 5 },
       }
     ),
 
-    alphabeticHintSymbolsBackgroundStyle: hintSymbolsStyles['长按背景样式'],
-    alphabeticHintSymbolsSelectedStyle: hintSymbolsStyles['长按选中背景样式'],
-    ButtonScaleAnimation: animation['26键按键动画'],
+    alphabeticHintSymbolsBackgroundStyle: hintSymbolsStyles["长按背景样式"],
+    alphabeticHintSymbolsSelectedStyle: hintSymbolsStyles["长按选中背景样式"],
+    ButtonScaleAnimation: animation["26键按键动画"],
   };
 
 {
@@ -834,7 +834,7 @@ local keyboard(theme, orientation) =
     swipeStyles.makeSwipeStyles(theme, {
       swipe_up: swipe_up,
       swipe_down: swipe_down,
-      type: 'pinyin',
+      type: "pinyin",
       orientation: orientation,
     }) +
     hintSymbolsStyles.getStyle(theme, hintSymbolsData) +  // 长按

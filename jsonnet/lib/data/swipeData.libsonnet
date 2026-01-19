@@ -34,7 +34,7 @@
     shift: { action: { shortcut: '#keyboardPerformance' } },
     enter: { action: { shortcut: '#换行' } },
   },
-  
+
   swipeDown: {
     q: { action: { character: '!' }, label: { text: '!' }, center: { x: 0.78, y: 0.76 } },
     w: { action: { symbol: '@' }, label: { text: '@' }, center: { x: 0.78, y: 0.76 } },

@@ -568,7 +568,59 @@ spaceRightButtonForegroundStyle2: utils.makeTextStyle(
 
 **影响范围**：此修改会自动应用到所有键盘类型、所有主题模式。
 
-#### 示例 4：修改颜色主题
+#### 示例 4：修改英文键盘的逗号和句号位置
+
+**需求**：调整英文键盘中逗号和句号的显示位置
+
+**需要修改的文件**：
+- `jsonnet/keyboard/alphabetic_26.jsonnet` - 英文字母键盘
+
+**修改方法**：
+```jsonnet
+// 修改前
+spaceRightButtonForegroundStyle: utils.makeTextStyle(
+  params={
+    text: ',',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: { x: 0.58, y: 0.25 },  // 向右调整0.08，向上调整0.1
+  }
+),
+
+spaceRightButtonForegroundStyle2: utils.makeTextStyle(
+  params={
+    text: '.',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: { x: 0.58, y: 0.55 },  // 向右调整0.08，向上调整0.1
+  }
+),
+
+// 修改后
+spaceRightButtonForegroundStyle: utils.makeTextStyle(
+  params={
+    text: ',',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: { x: 0.56, y: 0.26 },  // 往左移动0.02，往下移动0.01
+  }
+),
+
+spaceRightButtonForegroundStyle2: utils.makeTextStyle(
+  params={
+    text: '.',
+    normalColor: color[theme]['按键前景颜色'],
+    highlightColor: color[theme]['按键前景颜色'],
+    fontSize: fontSize['按键前景文字大小'],
+    center: { x: 0.56, y: 0.56 },  // 往左移动0.02，往下移动0.01
+  }
+),
+```
+
+#### 示例 5：修改颜色主题
 
 **需求**：调整亮色主题的按键背景颜色
 

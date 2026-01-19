@@ -1,5 +1,5 @@
 // 按键尺寸定义
-local constants = import '../core/constants.libsonnet';
+local constants = import "../core/constants.libsonnet";
 
 {
   // 竖屏按键尺寸
@@ -14,7 +14,7 @@ local constants = import '../core/constants.libsonnet';
     spaceRightKey: { width: { percentage: constants.PORTRAIT_BUTTON_WIDTH.SPACE_RIGHT } },
     enterKey: { width: { percentage: constants.PORTRAIT_BUTTON_WIDTH.ENTER } },
   },
-  
+
   // 横屏按键尺寸
   landscape: {
     normalKey: { width: constants.LANDSCAPE_BUTTON_WIDTH.NORMAL },
@@ -35,7 +35,7 @@ local constants = import '../core/constants.libsonnet';
     bKey: { width: constants.LANDSCAPE_BUTTON_WIDTH.V_B_N },
     nKey: { width: constants.LANDSCAPE_BUTTON_WIDTH.V_B_N },
   },
-  
+
   // 获取按键尺寸
-  getButtonSize(orientation): if orientation == 'landscape' then self.landscape else self.portrait,
+  getButtonSize(orientation): if orientation == "landscape" then self.landscape else self.portrait,
 }

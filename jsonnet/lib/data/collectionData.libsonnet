@@ -29,7 +29,7 @@
     n: { label: { text: '⇤' } },
     m: { label: { text: '⇥' } },
   },
-  
+
   // 符号集合
   symbol: {
     q: { label: { text: '1' } },
