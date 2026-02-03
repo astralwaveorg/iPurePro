@@ -186,12 +186,12 @@ local getToolBar(theme, orientation='portrait') = {
       {
         styleName: 'tranStyle',
         conditionKey: 'rime$s2t',
-        conditionValue: 1,
+        conditionValue: true,
       },
       {
         styleName: 'simpStyle',
-        conditionKey: 'rime$s2s',
-        conditionValue: 0,
+        conditionKey: 'rime$s2t',
+        conditionValue: false,
       },
     ],
     action: {
