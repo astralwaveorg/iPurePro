@@ -593,7 +593,7 @@ local keyboard(theme, orientation) =
       params={
         key: "spaceRight",
         size: ButtonSize["spaceRight键size"],
-        action: { character: '.' },
+        action: { symbol: '.' },
         backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
           "spaceRightButtonForegroundStyle",
