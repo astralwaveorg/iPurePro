@@ -527,32 +527,23 @@ local keyboarLayout(theme='light') = {
       width: '200/784',
     },
     'symbol键size': {
-      width: '104/784',
+      width: '173/784',
     },
     'EnZh键size': {
-      width: '104/784',
+      width: '173/784',
     },
     'number键size': {
-      width: '105.6/784',
+      width: '173/784',
     },
     'space键size': {
-      width: '200/784',
+      width: '438/784',
     },
     'spaceRight键size': {
-      width: '104/784',
+      width: '173/784',
     },
     'enter键size': {
-      width: '346/784',  // m + backspace = 146/784 + 200/784
-    },
-    'v键size': {
-      width: '209.6/784',  // number + spaceRight = 105.6/784 + 104/784
-    },
-    'b键size': {
-      width: '209.6/784',
-    },
-    'n键size': {
-      width: '209.6/784',
-    },
+      width: '438/784',
+    }
   },
 };
 

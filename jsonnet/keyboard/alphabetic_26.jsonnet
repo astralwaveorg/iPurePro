@@ -418,7 +418,8 @@ local keyboard(theme, orientation) =
     vButton: createButton(
       params={
         key: "v",
-        size: std.get(ButtonSize, if orientation == "landscape" then "v键size" else "普通键size"),
+        // size: std.get(ButtonSize, if orientation == "landscape" then "v键size" else "普通键size"),
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
@@ -431,7 +432,7 @@ local keyboard(theme, orientation) =
     bButton: createButton(
       params={
         key: "b",
-        size: std.get(ButtonSize, if orientation == "landscape" then "b键size" else "普通键size"),
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 
@@ -444,7 +445,7 @@ local keyboard(theme, orientation) =
     nButton: createButton(
       params={
         key: "n",
-        size: std.get(ButtonSize, if orientation == "landscape" then "n键size" else "普通键size"),
+        size: std.get(ButtonSize, "普通键size"),
       }
     ),
 

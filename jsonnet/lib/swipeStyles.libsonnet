@@ -29,14 +29,14 @@ local defaultCenter = function(direction, type, orientation)
 
   local landscapeMap = {
     up: {
-      pinyin: { x: 0.15, y: 0.15 },
-      number: { x: 0.15, y: 0.15 },
-      cn9: { x: 0.15, y: 0.15 },
+      pinyin: { x: 0.2, y: 0.2 },
+      number: { x: 0.2, y: 0.2 },
+      cn9: { x: 0.2, y: 0.2 },
     },
     down: {
-      pinyin: { x: 0.85, y: 0.85 },
-      number: { x: 0.85, y: 0.85 },
-      cn9: { x: 0.85, y: 0.85 },
+      pinyin: { x: 0.85, y: 0.82 },
+      number: { x: 0.85, y: 0.82 },
+      cn9: { x: 0.85, y: 0.82 },
     },
   };
 
