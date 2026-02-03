@@ -185,13 +185,13 @@ local getToolBar(theme, orientation='portrait') = {
     foregroundStyle: [
       {
         styleName: 'tranStyle',
-        conditionKey: 'rime$jffh',
-        conditionValue: true,
+        conditionKey: 'rime$s2t',
+        conditionValue: 1,
       },
       {
         styleName: 'simpStyle',
-        conditionKey: 'rime$jffh',
-        conditionValue: false,
+        conditionKey: 'rime$s2s',
+        conditionValue: 0,
       },
     ],
     action: {
