@@ -75,6 +75,7 @@
       selectedIndex: 1,
       list: [
         { action: { symbol: 'o' }, label: { text: 'o' } },
+        { action: { symbol: 'ó' }, label: { text: 'ó' } },
         { action: { symbol: '9' }, label: { text: '9' } },
         { action: { symbol: 'O' }, label: { text: 'O' } },
       ],
@@ -100,7 +101,9 @@
       list: [
         { action: { openURL: '#pasteboardContent' }, label: { systemImageName: 'link' }, fontSize: 14 },
         { action: { runTranslateScript: '谷歌中英互译' }, label: { systemImageName: 'translate' }, fontSize: 14 },
-        { action: { runScript: 'DeepSeek' }, label: { systemImageName: 'message.fill' }, fontSize: 14 },
+        { action: { symbol: '/' }, label: { text: '/' } },
+        { action: { symbol: '//' }, label: { text: '//' } },
+        //{ action: { runScript: 'DeepSeek' }, label: { systemImageName: 'message.fill' }, fontSize: 14 },
         { action: { runScript: 'Unicode' }, label: { text: 'U编' }, fontSize: 14 },
       ],
     },
