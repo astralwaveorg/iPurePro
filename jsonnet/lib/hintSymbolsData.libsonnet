@@ -114,9 +114,9 @@
     d: {
       selectedIndex: 1,
       list: [
-        { action: { sendKeys: '/date' }, label: { text: '日期' }, fontSize: 14 },
-        { action: { sendKeys: '/fsj' }, label: { text: '时间' }, fontSize: 14 },
-        { action: { sendKeys: '/fjq' }, label: { text: '节气' }, fontSize: 14 },
+        { action: { sendKeys: '/rq' }, label: { text: '日期' }, fontSize: 14 },
+        { action: { sendKeys: '/sj' }, label: { text: '时间' }, fontSize: 14 },
+        { action: { sendKeys: '/jq' }, label: { text: '节气' }, fontSize: 14 },
       ],
     },
     m: {

@@ -765,7 +765,7 @@ local keyboard(theme, orientation) =
       foregroundStyle: "enterButtonForegroundStyle0",
     },
 
-    // 蓝色回车通知（按前景细分）
+    // 绿色回车通知（按前景细分）
     blueReturnKeyTypeNotification14: {
       notificationType: "returnKeyType",
       returnKeyType: [1, 4],
