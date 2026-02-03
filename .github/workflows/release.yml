@@ -1,0 +1,55 @@
+name: Build and Release iPure Skin
+
+# 触发条件：推送到 main 分支时，或手动触发
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+# 权限设置：允许 Workflow 创建 Release
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Jsonnet
+        run: sudo apt-get update && sudo apt-get install -y jsonnet
+      - name: Generate Version
+        id: version
+        run: |
+          TZ='Asia/Shanghai' date +'%Y%m%d%H%M' > version_suffix.txt
+          echo "VERSION=v1.$(cat version_suffix.txt)" >> $GITHUB_ENV
+          echo "生成的版本号: v1.$(cat version_suffix.txt)"
+
+      - name: Build Skin
+        run: |
+          echo "开始构建..."
+          BUILD_DIR_NAME="iPure·Pro"
+          OUTPUT_FILENAME="iPurePro.cskin"
+          jsonnet -S -m . jsonnet/main.jsonnet
+          mkdir -p "$BUILD_DIR_NAME"
+          cp config.yaml "$BUILD_DIR_NAME/"
+          cp -r dark "$BUILD_DIR_NAME/"
+          cp -r light "$BUILD_DIR_NAME/"
+          cp -r jsonnet "$BUILD_DIR_NAME/"
+          if [ -f "demo.png" ]; then
+            cp demo.png "$BUILD_DIR_NAME/"
+          fi
+          zip -r "$OUTPUT_FILENAME" "$BUILD_DIR_NAME"
+          echo "打包完成: $OUTPUT_FILENAME"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          files: iPurePro.cskin
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
