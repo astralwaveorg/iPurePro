@@ -6,6 +6,7 @@
 config.yaml
 light/*.yaml
 dark/*.yaml
+IFLOW.md
 
 # ====================
 # macOS 系统文件
