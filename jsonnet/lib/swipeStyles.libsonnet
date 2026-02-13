@@ -98,11 +98,11 @@ local makeSwipeUpHintForegroundStyle = function(key, direction, theme, type, ori
   if std.length(key) == 1 && std.objectHas(data, 'label') then
     if std.objectHas(label, 'text') then
       {
-        [key + 'ButtonSwipeUpHintForegroundStyle']: makeTextStyle(theme, label, direction, type, orientation, data),
+        [key + 'ButtonSwipeUpHintForegroundStyle']: makeTextStyle(theme, label, direction, type, orientation, data + { fontSize: 20 }),
       }
     else if std.objectHas(label, 'systemImageName') then
       {
-        [key + 'ButtonSwipeUpHintForegroundStyle']: makeSystemImageStyle(theme, label, direction, type, orientation, data),
+        [key + 'ButtonSwipeUpHintForegroundStyle']: makeSystemImageStyle(theme, label, direction, type, orientation, data + { fontSize: 20 }),
       }
     else {}
   else {};
