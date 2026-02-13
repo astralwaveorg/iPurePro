@@ -1,8 +1,8 @@
 local swipeData = import "swipeData.libsonnet";
 
-local custom = {  // 同字母但是不同设置的，在这里加上，会覆盖掉swipeData.libsonnet中对应的按键设置以供英文键盘使用。
+local custom = {
   swipe_up: {
-    q: { action: { symbol: "1" }, label: { text: "1" } },  // action同仓皮肤定义，label可选text/systemImageName, 具体见仓皮肤文档，若不想显示，可设置为text: ""
+    q: { action: { symbol: "1" }, label: { text: "1" } },
     w: { action: { symbol: "2" }, label: { text: "2" } },
     e: { action: { symbol: "3" }, label: { text: "3" } },
     r: { action: { symbol: "4" }, label: { text: "4" } },

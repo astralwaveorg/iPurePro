@@ -7,9 +7,8 @@
     action: 必需， 格式同仓文档
     label:  非必需， 不设置这个不会生成对应前景，也就是不会显示在按键上，具体格式也见文档
   */
-
   swipe_up: {
-    q: { action: { character: "1" }, label: { text: "1" } },  // action同仓皮肤定义，label可选text/systemImageName, 具体见仓皮肤文档，若不想显示，可设置为text: ""
+    q: { action: { character: "1" }, label: { text: "1" } },
     w: { action: { character: "2" }, label: { text: "2" } },
     e: { action: { character: "3" }, label: { text: "3" } },
     r: { action: { character: "4" }, label: { text: "4" } },
@@ -46,25 +45,27 @@
     },
     b: {
       action: "tab",
-      label: { systemImageName: 'arrow.forward.to.line' },
+      label: { systemImageName: "arrow.forward.to.line" },
       center: { x: 0.5, y: 0.25 },
     },
     n: {
       action: { shortcut: "#行首" },
-      label: { systemImageName: 'arrowshape.turn.up.backward' },
+      label: { systemImageName: "arrowshape.turn.up.backward" },
       center: { x: 0.5, y: 0.25 },
     },
     m: {
       action: { shortcut: "#行尾" },
-      label: { label: { systemImageName: 'arrowshape.turn.up.forward' },
-      center: { x: 0.5, y: 0.25 },
+      label: {
+        label: { systemImageName: "arrowshape.turn.up.forward" },
+        center: { x: 0.5, y: 0.25 },
+      },
+      number: { action: { keyboardType: "symbolic" }, label: { text: "" } },
+      spaceRight: { action: { character: "，" }, label: { text: "" } },
+      space: { action: { shortcut: "#次选上屏" }, label: { text: "" } },
+      backspace: { action: { shortcut: "#undo" }, label: { text: "" } },
+      shift: { action: { shortcut: "#keyboardPerformance" } },
+      enter: { action: { shortcut: "#换行" } },
     },
-    number: { action: { keyboardType: "symbolic" }, label: { text: "" } },
-    spaceRight: { action: { character: "，" }, label: { text: "" } },
-    space: { action: { shortcut: "#次选上屏" }, label: { text: "" } },
-    backspace: { action: { shortcut: "#undo" }, label: { text: "" } },
-    shift: { action: { shortcut: "#keyboardPerformance" } },
-    enter: { action: { shortcut: "#换行" } },
   },
   swipe_down: {
     q: { action: { character: "!" }, label: { text: "!" }, center: { x: 0.78, y: 0.76 } },
@@ -97,8 +98,6 @@
     backspace: { action: { shortcut: "#redo" } },
     space: { action: { shortcut: "#三选上屏" } },
   },
-
-  // 中文九键划动
   cn9_swipe_up: {
     "1": { action: { symbol: "1" }, label: { text: "1" } },
     "2": { action: { symbol: "2" }, label: { text: "2" } },
@@ -119,14 +118,9 @@
     "7": { action: { shortcut: "#cut" }, label: { text: "✂️" } },
     "8": { action: { shortcut: "#copy" }, label: { text: "📋" } },
     "9": { action: { shortcut: "#paste" }, label: { text: "📌" } },
-
   },
-
-  // 格式和上面一致
   number_swipe_up: {
-    // '1': { action: { character: '/' }, label: { text: '/' } },
   },
   number_swipe_down: {
-    // '1': { action: { character: '/' }, label: { text: '/' } },
   },
 }
