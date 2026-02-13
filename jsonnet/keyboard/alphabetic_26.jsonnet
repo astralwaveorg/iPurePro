@@ -8,15 +8,12 @@ local others = import "../lib/others.libsonnet";
 local swipeData = import "../lib/swipeData-en.libsonnet";
 local toolbar = import "../lib/toolbar-en.libsonnet";
 local utils = import "../lib/utils.libsonnet";
-
 local hintSymbolsStyles = import "../lib/hintSymbolsStyles.libsonnet";
 local swipeStyles = import "../lib/swipeStyles.libsonnet";
-
 // 划动以及长按数据
 local swipe_up = std.get(swipeData, "swipe_up", {});
 local swipe_down = std.get(swipeData, "swipe_down", {});
 local hintSymbolsData = std.get(_hintSymbolsData, "alphabetic", {});
-
 local createButton(params={}) =
   local isLetter = std.get(params, "isLetter", true);
   std.prune({
@@ -32,7 +29,6 @@ local createButton(params={}) =
         ])
       else
         std.get(params, "foregroundStyle", params.key + "ButtonForegroundStyle"),
-
     [if isLetter then "uppercasedStateForegroundStyle"]: std.prune([
       params.key + "ButtonUppercasedStateForegroundStyle",
       if std.objectHas(swipe_up, params.key) then params.key + "ButtonUpForegroundStyle" else null,
@@ -48,43 +44,36 @@ local createButton(params={}) =
     [if std.objectHas(swipe_up, params.key) then "swipeUpAction"]: swipe_up[params.key].action,
     [if std.objectHas(swipe_down, params.key) then "swipeDownAction"]: swipe_down[params.key].action,
     [if std.objectHas(hintSymbolsData, params.key) then "hintSymbolsStyle"]: params.key + "ButtonHintSymbolsStyle",
-
     // 动画
     animation: [
       "ButtonScaleAnimation",
       // 'CartoonAniamtion',
     ],
   });
-
 local keyboard(theme, orientation) =
   {
     local ButtonSize = keyboardLayout.getButtonSize(theme, orientation),
-
     preeditHeight: others[if orientation == "portrait" then "竖屏" else "横屏"]["preedit高度"],
     toolbarHeight: others[if orientation == "portrait" then "竖屏" else "横屏"]["toolbar高度"],
     keyboardHeight: others[if orientation == "portrait" then "竖屏" else "横屏"]["keyboard高度"],
-
     qButton: createButton(
       params={
         key: "q",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     qButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "qButtonHintForegroundStyle",
       swipeUpForegroundStyle: "qButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "qButtonSwipeDownHintForegroundStyle",
     },
-
     wButton: createButton(
       params={
         key: "w",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     wButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "wButtonHintForegroundStyle",
@@ -97,77 +86,37 @@ local keyboard(theme, orientation) =
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     eButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "eButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "eButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "eButtonSwipeDownHintForegroundStyle",
-
-        },
-
-    
-
-        rButton: createButton(
-
-          params={
-
-            key: "r",
-
-            size: std.get(ButtonSize, "普通键size"),
-
-          }
-
-        ),
-
-    
-
-        rButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "rButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "rButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "rButtonSwipeDownHintForegroundStyle",
-
-        },
-
-    
-
-        tButton: createButton(
-
-          params={
-
-            key: "t",
-
-            size: std.get(ButtonSize, "普通键size"),
-
-            bounds: std.get(ButtonSize, "t键bounds"),
-
-          }
-
-        ),
-
-    
-
-        tButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "tButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "tButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "tButtonSwipeDownHintForegroundStyle",
-
-        },
-
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "eButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "eButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "eButtonSwipeDownHintForegroundStyle",
+    },
+    rButton: createButton(
+      params={
+        key: "r",
+        size: std.get(ButtonSize, "普通键size"),
+      }
+    ),
+    rButtonHintStyle: {
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "rButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "rButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "rButtonSwipeDownHintForegroundStyle",
+    },
+    tButton: createButton(
+      params={
+        key: "t",
+        size: std.get(ButtonSize, "普通键size"),
+        bounds: std.get(ButtonSize, "t键bounds"),
+      }
+    ),
+    tButtonHintStyle: {
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "tButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "tButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "tButtonSwipeDownHintForegroundStyle",
+    },
     yButton: createButton(
       params={
         key: "y",
@@ -175,131 +124,60 @@ local keyboard(theme, orientation) =
         bounds: std.get(ButtonSize, "y键bounds"),
       }
     ),
-
     yButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "yButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "yButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "yButtonSwipeDownHintForegroundStyle",
-
-        },
-
-    
-
-        uButton: createButton(
-
-          params={
-
-            key: "u",
-
-            size: std.get(ButtonSize, "普通键size"),
-
-          }
-
-        ),
-
-    
-
-        uButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "uButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "uButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "uButtonSwipeDownHintForegroundStyle",
-
-        },
-
-    
-
-        iButton: createButton(
-
-          params={
-
-            key: "i",
-
-            size: std.get(ButtonSize, "普通键size"),
-
-          }
-
-        ),
-
-    
-
-        iButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "iButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "iButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "iButtonSwipeDownHintForegroundStyle",
-
-        },
-
-    
-
-        oButton: createButton(
-
-          params={
-
-            key: "o",
-
-            size: std.get(ButtonSize, "普通键size"),
-
-          }
-
-        ),
-
-    
-
-        oButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "oButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "oButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "oButtonSwipeDownHintForegroundStyle",
-
-        },
-
-    
-
-        pButton: createButton(
-
-          params={
-
-            key: "p",
-
-            size: std.get(ButtonSize, "p键size"),
-
-          }
-
-        ),
-
-    
-
-        pButtonHintStyle: {
-
-          backgroundStyle: "alphabeticHintBackgroundStyle",
-
-          foregroundStyle: "pButtonHintForegroundStyle",
-
-          swipeUpForegroundStyle: "pButtonSwipeUpHintForegroundStyle",
-
-          swipeDownForegroundStyle: "pButtonSwipeDownHintForegroundStyle",
-
-        },
-
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "yButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "yButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "yButtonSwipeDownHintForegroundStyle",
+    },
+    uButton: createButton(
+      params={
+        key: "u",
+        size: std.get(ButtonSize, "普通键size"),
+      }
+    ),
+    uButtonHintStyle: {
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "uButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "uButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "uButtonSwipeDownHintForegroundStyle",
+    },
+    iButton: createButton(
+      params={
+        key: "i",
+        size: std.get(ButtonSize, "普通键size"),
+      }
+    ),
+    iButtonHintStyle: {
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "iButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "iButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "iButtonSwipeDownHintForegroundStyle",
+    },
+    oButton: createButton(
+      params={
+        key: "o",
+        size: std.get(ButtonSize, "普通键size"),
+      }
+    ),
+    oButtonHintStyle: {
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "oButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "oButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "oButtonSwipeDownHintForegroundStyle",
+    },
+    pButton: createButton(
+      params={
+        key: "p",
+        size: std.get(ButtonSize, "p键size"),
+      }
+    ),
+    pButtonHintStyle: {
+      backgroundStyle: "alphabeticHintBackgroundStyle",
+      foregroundStyle: "pButtonHintForegroundStyle",
+      swipeUpForegroundStyle: "pButtonSwipeUpHintForegroundStyle",
+      swipeDownForegroundStyle: "pButtonSwipeDownHintForegroundStyle",
+    },
     aButton: createButton(
       params={
         key: "a",
@@ -307,112 +185,96 @@ local keyboard(theme, orientation) =
         bounds: std.get(ButtonSize, "a键bounds"),
       }
     ),
-
     aButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "aButtonHintForegroundStyle",
       swipeUpForegroundStyle: "aButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "aButtonSwipeDownHintForegroundStyle",
     },
-
     sButton: createButton(
       params={
         key: "s",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     sButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "sButtonHintForegroundStyle",
       swipeUpForegroundStyle: "sButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "sButtonSwipeDownHintForegroundStyle",
     },
-
     dButton: createButton(
       params={
         key: "d",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     dButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "dButtonHintForegroundStyle",
       swipeUpForegroundStyle: "dButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "dButtonSwipeDownHintForegroundStyle",
     },
-
     fButton: createButton(
       params={
         key: "f",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     fButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "fButtonHintForegroundStyle",
       swipeUpForegroundStyle: "fButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "fButtonSwipeDownHintForegroundStyle",
     },
-
     gButton: createButton(
       params={
         key: "g",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     gButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "gButtonHintForegroundStyle",
       swipeUpForegroundStyle: "gButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "gButtonSwipeDownHintForegroundStyle",
     },
-
     hButton: createButton(
       params={
         key: "h",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     hButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "hButtonHintForegroundStyle",
       swipeUpForegroundStyle: "hButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "hButtonSwipeDownHintForegroundStyle",
     },
-
     jButton: createButton(
       params={
         key: "j",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     jButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "jButtonHintForegroundStyle",
       swipeUpForegroundStyle: "jButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "jButtonSwipeDownHintForegroundStyle",
     },
-
     kButton: createButton(
       params={
         key: "k",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     kButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "kButtonHintForegroundStyle",
       swipeUpForegroundStyle: "kButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "kButtonSwipeDownHintForegroundStyle",
     },
-
     lButton: createButton(
       params={
         key: "l",
@@ -420,7 +282,6 @@ local keyboard(theme, orientation) =
         bounds: std.get(ButtonSize, "l键bounds"),
       }
     ),
-
     lButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "lButtonHintForegroundStyle",
@@ -442,13 +303,11 @@ local keyboard(theme, orientation) =
         "shiftStateNotification",
       ],
     },
-
     shiftStateNotification: {
       notificationType: "shiftState",
       backgroundStyle: "shiftButtonGreenBackgroundStyle",
       foregroundStyle: "shiftButtonUppercasedForegroundStyle",
     },
-
     shiftButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
         systemImageName: "capslock",
@@ -487,49 +346,42 @@ local keyboard(theme, orientation) =
         highlightLowerEdgeColor: color[theme]["底边缘颜色-高亮"],
       }
     ),
-
     zButton: createButton(
       params={
         key: "z",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     zButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "zButtonHintForegroundStyle",
       swipeUpForegroundStyle: "zButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "zButtonSwipeDownHintForegroundStyle",
     },
-
     xButton: createButton(
       params={
         key: "x",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     xButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "xButtonHintForegroundStyle",
       swipeUpForegroundStyle: "xButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "xButtonSwipeDownHintForegroundStyle",
     },
-
     cButton: createButton(
       params={
         key: "c",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     cButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "cButtonHintForegroundStyle",
       swipeUpForegroundStyle: "cButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "cButtonSwipeDownHintForegroundStyle",
     },
-
     vButton: createButton(
       params={
         key: "v",
@@ -537,49 +389,42 @@ local keyboard(theme, orientation) =
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     vButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "vButtonHintForegroundStyle",
       swipeUpForegroundStyle: "vButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "vButtonSwipeDownHintForegroundStyle",
     },
-
     bButton: createButton(
       params={
         key: "b",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     bButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "bButtonHintForegroundStyle",
       swipeUpForegroundStyle: "bButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "bButtonSwipeDownHintForegroundStyle",
     },
-
     nButton: createButton(
       params={
         key: "n",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     nButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "nButtonHintForegroundStyle",
       swipeUpForegroundStyle: "nButtonSwipeUpHintForegroundStyle",
       swipeDownForegroundStyle: "nButtonSwipeDownHintForegroundStyle",
     },
-
     mButton: createButton(
       params={
         key: "m",
         size: std.get(ButtonSize, "普通键size"),
       }
     ),
-
     mButtonHintStyle: {
       backgroundStyle: "alphabeticHintBackgroundStyle",
       foregroundStyle: "mButtonHintForegroundStyle",
@@ -595,7 +440,6 @@ local keyboard(theme, orientation) =
         isLetter: false,
       }
     ),
-
     backspaceButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
         systemImageName: "delete.left",
@@ -606,7 +450,6 @@ local keyboard(theme, orientation) =
         // center: { y: 0.53 },
       }
     ),
-
     EnZhButton: createButton(
       params={
         key: "EnZh",
@@ -617,7 +460,6 @@ local keyboard(theme, orientation) =
         foregroundStyle: "EnZhButtonForegroundStyle",
       }
     ),
-
     EnZhButtonForegroundStyle: utils.makeImageStyle(
       {
         contentMode: "center",
@@ -632,7 +474,6 @@ local keyboard(theme, orientation) =
         },
       }
     ),
-
     symbolButton: createButton(
       params={
         key: "symbol",
@@ -643,7 +484,6 @@ local keyboard(theme, orientation) =
         foregroundStyle: "symbolButtonForegroundStyle",
       }
     ),
-
     symbolButtonForegroundStyle: utils.makeTextStyle(
       params={
         text: "符",
@@ -653,7 +493,6 @@ local keyboard(theme, orientation) =
         center: { x: 0.5, y: 0.48 },
       }
     ),
-
     numberButton: createButton(
       params={
         key: "number",
@@ -664,7 +503,6 @@ local keyboard(theme, orientation) =
         foregroundStyle: "numberButtonForegroundStyle",
       }
     ),
-
     numberButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
         systemImageName: "numbers",
@@ -674,7 +512,6 @@ local keyboard(theme, orientation) =
         center: center["功能键前景文字偏移"] { y: 0.5 },
       }
     ),
-
     spaceButton: createButton(
       params={
         key: "space",
@@ -688,7 +525,6 @@ local keyboard(theme, orientation) =
         isLetter: false,
       }
     ),
-
     spaceButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
         systemImageName: "space",
@@ -698,7 +534,6 @@ local keyboard(theme, orientation) =
         center: center["功能键前景文字偏移"] { y: 0.5 },
       }
     ),
-
     // 显示方案名
     spaceButtonForegroundStyle2: utils.makeTextStyle({
       text: "$rimeSchemaName",
@@ -707,12 +542,11 @@ local keyboard(theme, orientation) =
       normalColor: color[theme]["划动字符颜色"],
       highlightColor: color[theme]["划动字符颜色"],
     }),
-
     spaceRightButton: createButton(
       params={
         key: "spaceRight",
         size: ButtonSize["spaceRight键size"],
-        action: { symbol: '.' },
+        action: { symbol: "." },
         backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
           "spaceRightButtonForegroundStyle",
@@ -721,7 +555,6 @@ local keyboard(theme, orientation) =
         isLetter: false,
       }
     ),
-
     spaceRightButtonForegroundStyle: utils.makeTextStyle(
       params={
         text: ",",
@@ -731,7 +564,6 @@ local keyboard(theme, orientation) =
         center: { x: 0.5, y: 0.28 },
       }
     ),
-
     spaceRightButtonForegroundStyle2: utils.makeTextStyle(
       params={
         text: ".",
@@ -741,7 +573,6 @@ local keyboard(theme, orientation) =
         center: { x: 0.5, y: 0.58 },
       }
     ),
-
     enterButton: createButton(
       params={
         key: "enter",
@@ -798,7 +629,6 @@ local keyboard(theme, orientation) =
         "blueReturnKeyTypeNotification9",
       ],
     },
-
     enterButtonForegroundStyle0: utils.makeSystemImageStyle(
       params={
         systemImageName: "return.left",
@@ -817,7 +647,6 @@ local keyboard(theme, orientation) =
         center: center["功能键前景文字偏移"],
       }
     ),
-
     enterButtonForegroundStyle7: utils.makeSystemImageStyle(
       params={
         systemImageName: "paperplane",
@@ -827,7 +656,6 @@ local keyboard(theme, orientation) =
         center: center["功能键前景文字偏移"],
       }
     ),
-
     enterButtonForegroundStyle14: utils.makeSystemImageStyle(
       params={
         systemImageName: "arrowshape.turn.up.forward",
@@ -837,7 +665,6 @@ local keyboard(theme, orientation) =
         center: center["功能键前景文字偏移"],
       }
     ),
-
     enterButtonForegroundStyle9: utils.makeSystemImageStyle(
       params={
         systemImageName: "checkmark.app.stack",
@@ -847,7 +674,6 @@ local keyboard(theme, orientation) =
         center: center["功能键前景文字偏移"],
       }
     ),
-
     enterButtonBlueBackgroundStyle: utils.makeGeometryStyle(
       params={
         buttonStyleType: "geometry",
@@ -866,7 +692,6 @@ local keyboard(theme, orientation) =
       backgroundStyle: "systemButtonBackgroundStyle",
       foregroundStyle: "enterButtonForegroundStyle0",
     },
-
     // 蓝色回车通知（按前景细分）
     blueReturnKeyTypeNotification14: {
       notificationType: "returnKeyType",
@@ -902,7 +727,6 @@ local keyboard(theme, orientation) =
         highlightLowerEdgeColor: color[theme]["底边缘颜色-高亮"],
       }
     ),
-
     systemButtonBackgroundStyle: utils.makeGeometryStyle(
       params={
         insets: { top: 3, left: 3, bottom: 4, right: 3 },
@@ -922,24 +746,21 @@ local keyboard(theme, orientation) =
         shadowOffset: { x: 0, y: 5 },
       }
     ),
-
     alphabeticHintSymbolsBackgroundStyle: hintSymbolsStyles["长按背景样式"],
     alphabeticHintSymbolsSelectedStyle: hintSymbolsStyles["长按选中背景样式"],
     ButtonScaleAnimation: animation["26键按键动画"],
   };
-
 {
   new(theme, orientation):
-    keyboard(theme, orientation) +  // 按键区
-    keyboardLayout.getAlphabeticLayout(theme, orientation) +  // 布局
+    keyboard(theme, orientation) +
+    keyboardLayout.getAlphabeticLayout(theme, orientation) +
     swipeStyles.makeSwipeStyles(theme, {
       swipe_up: swipe_up,
       swipe_down: swipe_down,
       type: "pinyin",
-      orientation: orientation,
     }) +
-    hintSymbolsStyles.getStyle(theme, hintSymbolsData) +  // 长按
-    toolbar.getToolBar(theme, orientation) +  // 工具栏
-    utils.genAlphabeticStyles(theme) +  // 批量生成前景
+    hintSymbolsStyles.getStyle(theme, hintSymbolsData) +
+    toolbar.getToolBar(theme) +
+    utils.genAlphabeticStyles(theme) +
     utils.genHintStyles(theme),
 }

@@ -636,7 +636,7 @@ local keyboard(theme, orientation) =
       params={
         key: "spaceRight",
         size: ButtonSize["spaceRight键size"],
-        action: { symbol: '。' },
+        action: { symbol: "。" },
         backgroundStyle: "alphabeticBackgroundStyle",
         foregroundStyle: [
           "spaceRightButtonForegroundStyle",
@@ -854,16 +854,15 @@ local keyboard(theme, orientation) =
 
 {
   new(theme, orientation):
-    keyboard(theme, orientation) +  // 按键区
-    keyboardLayout.getPinyinLayout(theme, orientation) +  // 布局
+    keyboard(theme, orientation) +
+    keyboardLayout.getPinyinLayout(theme, orientation) +
     swipeStyles.makeSwipeStyles(theme, {
       swipe_up: swipe_up,
       swipe_down: swipe_down,
       type: "pinyin",
-      orientation: orientation,
     }) +
-    hintSymbolsStyles.getStyle(theme, hintSymbolsData) +  // 长按
-    toolbar.getToolBar(theme, orientation) +  // 工具栏
-    utils.genPinyinStyles(theme) +  // 批量生成前景
+    hintSymbolsStyles.getStyle(theme, hintSymbolsData) +
+    toolbar.getToolBar(theme) +
+    utils.genPinyinStyles(theme) +
     utils.genHintStyles(theme),
 }
