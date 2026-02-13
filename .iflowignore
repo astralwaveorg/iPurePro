@@ -1,0 +1,123 @@
+# ====================
+# iFlow CLI 忽略文件
+# ====================
+# 此文件用于控制 iFlow CLI 在分析代码时忽略的文件和目录
+# 参考 .gitignore 的设计理念，但针对 iFlow CLI 的需求进行优化
+
+# ====================
+# Jsonnet 生成的文件（不需要读取）
+# ====================
+# 这些文件是由 jsonnet 编译生成的，不是源代码
+config.yaml
+light/*.yaml
+dark/*.yaml
+
+# ====================
+# 文档文件（可选忽略）
+# ====================
+# 如果不需要分析文档，可以忽略这些文件
+# README.md
+# AGENTS.md
+# IFLOW.md
+# TASK.md
+# MIGRATION.md
+
+# ====================
+# 旧架构代码（v2 重构时可以忽略）
+# ====================
+# 当开发 v2 新架构时，可以忽略旧架构文件，避免干扰
+# 取消下面的注释来忽略旧架构
+# jsonnet/keyboard/
+# jsonnet/lib/
+
+# ====================
+# 图片和资源文件（不需要读取）
+# ====================
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.bmp
+*.ico
+*.webp
+demo.png
+
+# ====================
+# 编译产物和临时文件
+# ====================
+*.cskin
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.dmg
+
+# ====================
+# 系统文件
+# ====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ====================
+# IDE 和编辑器文件
+# ====================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.iml
+*.iws
+*.swp
+*.swo
+*~
+.*.swp
+\#*\#
+.\#*
+
+# ====================
+# 依赖和构建目录
+# ====================
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ====================
+# 日志和临时文件
+# ====================
+*.log
+*.tmp
+*.temp
+*.cache
+
+# ====================
+# 备份文件
+# ====================
+*.bak
+*.backup
+*.old
+
+# ====================
+# 环境配置文件
+# ====================
+.env
+.env.local
+.env.*.local
