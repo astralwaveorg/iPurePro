@@ -25,9 +25,9 @@
     x: { label: { systemImageName: 'scissors' } },
     c: { label: { systemImageName: 'document.badge.plus' } },
     v: { label: { systemImageName: 'document.on.clipboard' } },
-    b: { label: { text: '↹' } },
-    n: { label: { text: '⇤' } },
-    m: { label: { text: '⇥' } },
+    b: { label: { systemImageName: 'arrow.forward.to.line' } },
+    n: { label: { systemImageName: 'arrowshape.turn.up.backward' } },
+    m: { label: { systemImageName: 'arrowshape.turn.up.forward' } },
   },
 
   // 符号集合
@@ -55,8 +55,8 @@
     x: { label: { systemImageName: 'scissors' } },
     c: { label: { systemImageName: 'document.badge.plus' } },
     v: { label: { systemImageName: 'document.on.clipboard' } },
-    b: { label: { text: '↹' } },
-    n: { label: { text: '⇤' } },
-    m: { label: { text: '⇥' } },
+    b: { label: { systemImageName: 'arrow.forward.to.line' } },
+    n: { label: { systemImageName: 'arrowshape.turn.up.backward' } },
+    m: { label: { systemImageName: 'arrowshape.turn.up.forward' } },
   },
 }
