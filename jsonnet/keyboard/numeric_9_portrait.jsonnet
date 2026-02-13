@@ -227,7 +227,7 @@ local keyboard(theme) =
     symbolButton: createButton(
       params={
         key: "symbol",
-        action: { keyboardType: "symbolic" },
+        action: { keyboardType: "alphabetic" },
         isNumber: false,
         backgroundStyle: "numberButtonBackgroundStyle",
       }
@@ -235,7 +235,7 @@ local keyboard(theme) =
 
     symbolButtonForegroundStyle: utils.makeTextStyle(
       params={
-        text: "符",
+        text: "英",
         normalColor: color[theme]["按键前景颜色"],
         highlightColor: color[theme]["按键前景颜色"],
         fontSize: fontSize["按键前景文字大小"],
