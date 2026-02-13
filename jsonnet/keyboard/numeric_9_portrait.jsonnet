@@ -233,13 +233,12 @@ local keyboard(theme) =
       }
     ),
 
-    symbolButtonForegroundStyle: utils.makeTextStyle(
+    symbolButtonForegroundStyle: utils.makeSystemImageStyle(
       params={
-        text: "英",
+        systemImageName: "characters.lowercase",
         normalColor: color[theme]["按键前景颜色"],
         highlightColor: color[theme]["按键前景颜色"],
         fontSize: fontSize["按键前景文字大小"],
-        center: { x: 0.5, y: 0.48 },  // 向上调整0.02
       }
     ),
 
@@ -507,8 +506,6 @@ local keyboard(theme) =
     ButtonScaleAnimation: animation["26键按键动画"],
     alphabeticHintSymbolsBackgroundStyle: hintSymbolsStyles["长按背景样式"],
     alphabeticHintSymbolsSelectedStyle: hintSymbolsStyles["长按选中背景样式"],
-
-    // 左侧符号列表数据来源
     symbols: collectionData.numericSymbols,
   };
 
@@ -524,7 +521,5 @@ local keyboard(theme) =
     hintSymbolsStyles.getStyle(theme, hintSymbolsData) +
     toolbar.getToolBar(theme, "portrait") +
     utils.genNumberStyles(theme),
-
-  // 导出keyboard给横屏用
   keyboard: keyboard,
 }
