@@ -95,6 +95,9 @@ local makeForegroundStyle = function(key, direction, theme, type, orientation, d
 // 通用的滑动气泡样式生成函数（上滑和下滑共用）
 local makeSwipeHintForegroundStyle = function(key, direction, theme, type, orientation, data)
   local label = std.get(data, 'label', {});
+  // 根据方向选择气泡字体大小
+  local bubbleFontSize = if orientation == 'landscape' then fontSize['横屏滑动气泡文字大小'] else fontSize['竖屏滑动气泡文字大小'];
+
   // 为单字符键生成特殊的滑动提示样式
   if std.length(key) == 1 && std.objectHas(data, 'label') then
     if std.objectHas(label, 'text') then
@@ -108,7 +111,7 @@ local makeSwipeHintForegroundStyle = function(key, direction, theme, type, orien
             orientation,
             data + {
               center: center['划动气泡文字偏移'],
-              fontSize: fontSize['划动气泡前景文字大小'],
+              fontSize: bubbleFontSize,
             }
           ),
       }
@@ -123,7 +126,7 @@ local makeSwipeHintForegroundStyle = function(key, direction, theme, type, orien
             orientation,
             data + {
               center: center['划动气泡sf符号偏移'],
-              fontSize: fontSize['划动气泡前景文字大小'],
+              fontSize: bubbleFontSize,
             }
           ),
       }

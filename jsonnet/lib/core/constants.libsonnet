@@ -65,10 +65,6 @@
       ENGLISH: 19,
       SYMBOL: 14,
     },
-    SWIPE: {
-      PORTRAIT: 12,
-      LANDSCAPE: 9,
-    },
     TOOLBAR: {
       SYMBOL: 16,
       TEXT: 13,
@@ -77,6 +73,15 @@
     PANEL: {
       TEXT: 12,
       SYMBOL: 16,
+    },
+    // 气泡文字大小（独立设置）
+    BUBBLE: {
+      SWIPE: {
+        PORTRAIT: 28,  // 竖屏滑动气泡文字大小
+        LANDSCAPE: 7,  // 横屏滑动气泡文字大小
+      },
+      LONG_PRESS_TEXT: 20,  // 长按气泡文字大小
+      LONG_PRESS_SYMBOL: 12, // 长按气泡符号大小
     },
   },
 
