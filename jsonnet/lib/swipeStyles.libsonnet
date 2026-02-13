@@ -92,17 +92,40 @@ local makeForegroundStyle = function(key, direction, theme, type, orientation, d
     { [styleName(type, key, direction)]: makeSystemImageStyle(theme, label, direction, type, orientation, data) }
   else {};
 
-local makeSwipeUpHintForegroundStyle = function(key, direction, theme, type, orientation, data)
+// 通用的滑动气泡样式生成函数（上滑和下滑共用）
+local makeSwipeHintForegroundStyle = function(key, direction, theme, type, orientation, data)
   local label = std.get(data, 'label', {});
-  // 为单字符键生成特殊的上滑提示样式
+  // 为单字符键生成特殊的滑动提示样式
   if std.length(key) == 1 && std.objectHas(data, 'label') then
     if std.objectHas(label, 'text') then
       {
-        [key + 'ButtonSwipeUpHintForegroundStyle']: makeTextStyle(theme, label, direction, type, orientation, data + { fontSize: 20 }),
+        [key + 'ButtonSwipe' + (if direction == 'up' then 'Up' else 'Down') + 'HintForegroundStyle']:
+          makeTextStyle(
+            theme,
+            label,
+            direction,
+            type,
+            orientation,
+            data + {
+              center: center['划动气泡文字偏移'],
+              fontSize: fontSize['划动气泡前景文字大小'],
+            }
+          ),
       }
     else if std.objectHas(label, 'systemImageName') then
       {
-        [key + 'ButtonSwipeUpHintForegroundStyle']: makeSystemImageStyle(theme, label, direction, type, orientation, data + { fontSize: 20 }),
+        [key + 'ButtonSwipe' + (if direction == 'up' then 'Up' else 'Down') + 'HintForegroundStyle']:
+          makeSystemImageStyle(
+            theme,
+            label,
+            direction,
+            type,
+            orientation,
+            data + {
+              center: center['划动气泡sf符号偏移'],
+              fontSize: fontSize['划动气泡前景文字大小'],
+            }
+          ),
       }
     else {}
   else {};
@@ -115,10 +138,10 @@ local processDirection = function(dirData, direction, theme, type, orientation)
     std.objectFields(dirData),
     {}
   ) +
-  // 上滑气泡显示，原先的按下气泡移到utils中集中生成
-  if direction == 'up' && type == 'pinyin' then
+  // 气泡显示（上滑和下滑都生成）
+  if type == 'pinyin' then
     std.foldl(
-      function(acc, k) acc + makeSwipeUpHintForegroundStyle(k, direction, theme, type, orientation, dirData[k]),
+      function(acc, k) acc + makeSwipeHintForegroundStyle(k, direction, theme, type, orientation, dirData[k]),
       std.objectFields(dirData),
       {}
     )

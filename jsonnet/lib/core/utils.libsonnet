@@ -40,7 +40,6 @@ local makeImageStyle = function(file, image, contentMode, insets) {
     buttonStyleType: 'fileImage',
     contentMode: contentMode,
     normalImage: { file: file, image: image },
-    highlightImage: { file: file, image: image },
     insets: insets,
 };
 
