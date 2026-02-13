@@ -112,7 +112,6 @@ local makeSwipeHintForegroundStyle = function(key, direction, theme, type, orien
             type,
             orientation,
             data + {
-              center: center['划动气泡文字偏移'],
               fontSize: bubbleFontSize,
             }
           ),
@@ -127,7 +126,6 @@ local makeSwipeHintForegroundStyle = function(key, direction, theme, type, orien
             type,
             orientation,
             data + {
-              center: center['划动气泡sf符号偏移'],
               fontSize: bubbleFontSize,
             }
           ),
