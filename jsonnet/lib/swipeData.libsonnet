@@ -46,17 +46,17 @@
     },
     b: {
       action: "tab",
-      label: { text: "↹" },
+      label: { systemImageName: 'arrow.forward.to.line' },
       center: { x: 0.5, y: 0.25 },
     },
     n: {
       action: { shortcut: "#行首" },
-      label: { text: "⇤" },
+      label: { systemImageName: 'arrowshape.turn.up.backward' },
       center: { x: 0.5, y: 0.25 },
     },
     m: {
       action: { shortcut: "#行尾" },
-      label: { text: "⇥" },
+      label: { label: { systemImageName: 'arrowshape.turn.up.forward' },
       center: { x: 0.5, y: 0.25 },
     },
     number: { action: { keyboardType: "symbolic" }, label: { text: "" } },

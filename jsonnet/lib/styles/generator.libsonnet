@@ -6,16 +6,16 @@ local theme = import '../core/theme.libsonnet';
 // 生成基础样式
 local generateBaseStyles = function(theme) {
   local themeData = theme.getTheme(theme);
-  
+
   {
     // 字母键样式
     alphabeticBackgroundStyle: utils.makeButtonStyle(theme, 'alphabetic', 'normal'),
     alphabeticBackgroundHighlightStyle: utils.makeButtonStyle(theme, 'alphabetic', 'highlight'),
-    
+
     // 功能键样式
     systemButtonBackgroundStyle: utils.makeButtonStyle(theme, 'function', 'normal'),
     systemButtonBackgroundHighlightStyle: utils.makeButtonStyle(theme, 'function', 'highlight'),
-    
+
     // 回车键样式
     enterButtonGreenBackgroundStyle: utils.makeGeometryStyle(
       themeData.enterKey.backgroundGreen,
@@ -23,16 +23,16 @@ local generateBaseStyles = function(theme) {
       constants.BUTTON.INSETS,
       themeData.enterKey.backgroundLowerEdgeNormal
     ),
-    
+
     // 动画样式
     ButtonScaleAnimation: constants.ANIMATION.BUTTON_SCALE,
-    
+
     // 键盘背景样式
     keyboardBackgroundStyle: {
       buttonStyleType: 'geometry',
       normalColor: themeData.keyboardBackground,
     },
-    
+
     // 气泡样式
     alphabeticHintBackgroundStyle: utils.makeGeometryStyle(
       themeData.candidate.selected,
@@ -46,7 +46,7 @@ local generateBaseStyles = function(theme) {
       {},
       {}
     ),
-    
+
     // 符号集合样式
     alphabeticHintSymbolsBackgroundStyle: utils.makeImageStyle(
       'hold_back',
@@ -66,7 +66,7 @@ local generateBaseStyles = function(theme) {
 // 生成回车键样式
 local generateEnterButtonStyles = function(theme) {
   local themeData = theme.getTheme(theme);
-  
+
   {
     enterButtonForegroundStyle0: utils.makeSymbolStyle(
       'return.left',
@@ -98,7 +98,7 @@ local generateEnterButtonStyles = function(theme) {
       themeData.enterKey.textHighlight,
       constants.OFFSET.FUNCTION_KEY
     ),
-    
+
     // 通知样式
     garyReturnKeyTypeNotification: {
       notificationType: 'returnKeyType',
@@ -136,7 +136,7 @@ local generateEnterButtonStyles = function(theme) {
 // 生成功能键样式
 local generateFunctionKeyStyles = function(theme) {
   local themeData = theme.getTheme(theme);
-  
+
   {
     // 切换中英文键
     EnZhButtonForegroundStyle: utils.makeImageStyle(
@@ -145,7 +145,7 @@ local generateFunctionKeyStyles = function(theme) {
       'center',
       constants.BUTTON.INSETS
     ),
-    
+
     // 符号键
     symbolButtonForegroundStyle: utils.makeTextStyle(
       '符',
@@ -153,15 +153,15 @@ local generateFunctionKeyStyles = function(theme) {
       themeData.functionKey.textNormal,
       { x: 0.5, y: 0.48 }
     ),
-    
+
     // 数字键
-    numberButtonForegroundStyle: utils.makeTextStyle(
-      '123',
+    numberButtonForegroundStyle: utils.makeSymbolStyle(
+      'numbers',
       constants.FONT_SIZE.BUTTON.TEXT,
       themeData.functionKey.textNormal,
       constants.OFFSET.FUNCTION_KEY
     ),
-    
+
     // 删除键
     backspaceButtonForegroundStyle: utils.makeSymbolStyle(
       'delete.left',
@@ -169,7 +169,7 @@ local generateFunctionKeyStyles = function(theme) {
       themeData.functionKey.textNormal,
       constants.OFFSET.FUNCTION_KEY
     ),
-    
+
     // Shift键
     shiftButtonForegroundStyle: utils.makeSymbolStyle(
       'arrow.up',

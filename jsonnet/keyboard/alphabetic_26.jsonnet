@@ -3,14 +3,13 @@ local center = import "../lib/center.libsonnet";
 local color = import "../lib/color.libsonnet";
 local fontSize = import "../lib/fontSize.libsonnet";
 local _hintSymbolsData = import "../lib/hintSymbolsData.libsonnet";
+local hintSymbolsStyles = import "../lib/hintSymbolsStyles.libsonnet";
 local keyboardLayout = import "../lib/keyboardLayout.libsonnet";
 local others = import "../lib/others.libsonnet";
 local swipeData = import "../lib/swipeData-en.libsonnet";
+local swipeStyles = import "../lib/swipeStyles.libsonnet";
 local toolbar = import "../lib/toolbar-en.libsonnet";
 local utils = import "../lib/utils.libsonnet";
-local hintSymbolsStyles = import "../lib/hintSymbolsStyles.libsonnet";
-local swipeStyles = import "../lib/swipeStyles.libsonnet";
-// 划动以及长按数据
 local swipe_up = std.get(swipeData, "swipe_up", {});
 local swipe_down = std.get(swipeData, "swipe_down", {});
 local hintSymbolsData = std.get(_hintSymbolsData, "alphabetic", {});
@@ -44,10 +43,8 @@ local createButton(params={}) =
     [if std.objectHas(swipe_up, params.key) then "swipeUpAction"]: swipe_up[params.key].action,
     [if std.objectHas(swipe_down, params.key) then "swipeDownAction"]: swipe_down[params.key].action,
     [if std.objectHas(hintSymbolsData, params.key) then "hintSymbolsStyle"]: params.key + "ButtonHintSymbolsStyle",
-    // 动画
     animation: [
       "ButtonScaleAnimation",
-      // 'CartoonAniamtion',
     ],
   });
 local keyboard(theme, orientation) =
