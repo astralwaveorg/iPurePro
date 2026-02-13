@@ -61,6 +61,7 @@ local makeTextStyle = function(theme, label, direction, type, orientation, overr
     normalColor: c.normalColor,
     highlightColor: c.highlightColor,
     center: std.get(overrides, 'center', defaultCenter(direction, type, orientation)),
+    insets: std.get(overrides, 'insets', {}),
   };
 
 local makeSystemImageStyle = function(theme, label, direction, type, orientation, overrides={})
@@ -73,6 +74,7 @@ local makeSystemImageStyle = function(theme, label, direction, type, orientation
     normalColor: c.normalColor,
     highlightColor: c.highlightColor,
     center: std.get(overrides, 'center', defaultCenter(direction, type, orientation)),
+    insets: std.get(overrides, 'insets', {}),
   };
 
 // 根据 key 生成样式名称
