@@ -36,9 +36,9 @@ local createButton(params={}) =
     ]),
     [if isLetter then "capsLockedStateForegroundStyle"]: self.uppercasedStateForegroundStyle,  // 同uppercaseStateForegroundStyle
     hintStyle: params.key + "ButtonHintStyle",
-    action: std.get(params, "action", { character: params.key }),
+    action: std.get(params, "action", { symbol: params.key }),
     [if isLetter then "uppercasedStateAction"]: {
-      character: std.asciiUpper(params.key),
+      symbol: std.asciiUpper(params.key),
     },
     repeatAction: std.get(params, "repeatAction"),
     [if std.objectHas(swipe_up, params.key) then "swipeUpAction"]: swipe_up[params.key].action,
