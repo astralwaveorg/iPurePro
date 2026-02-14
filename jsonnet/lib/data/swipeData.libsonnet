@@ -28,7 +28,7 @@
     n: { action: { shortcut: "#行首" }, label: { text: "⇤" }, center: { x: 0.5, y: 0.25 } },
     m: { action: { shortcut: "#行尾" }, label: { text: "⇥" }, center: { x: 0.5, y: 0.25 } },
     number: { action: { keyboardType: "symbolic" }, label: { text: "" } },
-    spaceRight: { action: { character: "，" }, label: { text: "" } },
+    spaceRight: { action: { symbol: "，" }, label: { text: "" } },
     space: { action: { shortcut: "#次选上屏" }, label: { text: "" } },
     backspace: { action: { shortcut: "#undo" }, label: { text: "" } },
     shift: { action: { shortcut: "#keyboardPerformance" } },
