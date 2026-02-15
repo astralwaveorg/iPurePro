@@ -35,7 +35,7 @@ local createButton(params={}) =
     ]),
     [if isLetter then "capsLockedStateForegroundStyle"]: self.uppercasedStateForegroundStyle,  // 同uppercaseStateForegroundStyle
     hintStyle: params.key + "ButtonHintStyle",
-    action: std.get(params, "action", { symbol: params.key }),
+    action: std.get(params, "action", { character: params.key }),
     [if isLetter then "uppercasedStateAction"]: {
       symbol: std.asciiUpper(params.key),
     },
